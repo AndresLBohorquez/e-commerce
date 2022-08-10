@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:composition>
+
+
+        <!-- Page title-->
+        <!-- Page Content-->
+        <div class="container py-4 py-lg-5 my-4">
+            <div class="container-fluid" align="center">
+                <div class="col-md-6" >
+                    <div class="card border-0 box-shadow">
+                        <div class="card-body">
+                            <h2 class="h4 mb-1">Iniciar Sesión</h2>
+                            <div class="py-3">
+
+                            </div>
+                            <hr></hr>
+                            <h3 class="font-size-base pt-4 pb-2"></h3>
+
+
+                            <h:messages style="color:red"></h:messages>
+
+
+                            <h:form class="needs-validation" html5:novalidate="true">
+                                <div class="input-group-overlay form-group">
+                                    <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="czi-mail"></i></span></div>
+                                    <h:inputText value="#{userSession.correoIn}" 
+                                                 class="form-control prepended-form-control" 
+                                                 html5:placeholder="Email" required="true"
+                                                 requiredMessage="Por favor ingresa tu email"/>
+                                </div>
+                                <div class="input-group-overlay form-group">
+                                    <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="czi-locked"></i></span></div>
+                                    <div class="password-toggle">
+                                        <h:inputSecret value="#{userSession.clave}" 
+                                                       class="form-control prepended-form-control" 
+                                                       html5:placeholder="Contraseña" required="true"
+                                                       requiredMessage="Por favor ingresa tu contraseña"/>
+                                        <label class="password-toggle-btn">
+                                            <input class="custom-control-input" type="checkbox"/><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="remember_me"/>
+                                        <label class="custom-control-label" for="remember_me">Recordar</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+
+                                    </div>
+                                    <!-- Basic example -->
+                                    <nav aria-label="breadcrumb"  >
+                                        <ol class="breadcrumb mt-2">
+                                            <li class="breadcrumb-item"><a href="#{request.contextPath}/pb/register.xhtml">Registrar</a></li>
+                                            <li class="breadcrumb-item"><a href="#{request.contextPath}/pb/password-recovery.xhtml">Recuperar Contraseña</a></li>
+                                        </ol>
+                                    </nav>
+
+
+                                </div>
+
+                                <div class="text-right pt-4">
+                                    <h:commandButton class="btn btn-primary" value="Iniciar"  action="#{userSession.iniciarSesion()}">
+                                    </h:commandButton>
+                                </div>
+
+
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:composition>
+
+</html>

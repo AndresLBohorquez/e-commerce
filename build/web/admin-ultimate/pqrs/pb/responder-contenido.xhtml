@@ -1,0 +1,930 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main pointer-event">
+
+            <div class="container-fluid" style="margin: 30px 0px">
+
+                <!-- Card -->
+                <div class="card mb-3 mb-lg-5">
+                    <div class="card-header">
+                        <h2 class="card-title h4">Responder PQRS</h2>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="card-body">
+                        <!-- Form -->
+                        <!-- Content  -->
+                        <section class="">
+                            <!-- Comment-->
+                            <c:forEach items="#{userSession.listarPqrsIndividualAdmin(userSession.pqrsObj.usuarioIdusuario.idusuario, userSession.pqrsObj.idpqrs)}" var="listaPqrs">
+                                <!-- Comment reply-->
+                                <div class="media py-4 border-bottom">
+                                    <c:forEach items="#{userSession.listarDatosUsuario(listaPqrs.usuarioIdusuario.idusuario)}" var="idimg">
+                                        <h:graphicImage style="width: 50px; height: 50px ; border-radius: 50%;" class="avatar-img" value="/imgprofile/#{idimg.fotoPerfil}" alt="img-x"/>
+                                    </c:forEach>
+                                    <div class="media-body pl-3">
+                                        <h6 class="font-size-md mb-2">#{listaPqrs.usuarioIdusuario.nombre} #{listaPqrs.usuarioIdusuario.apellido}</h6>
+                                        <p class="font-size-md mb-1">#{listaPqrs.descripcion}</p>
+                                    </div>
+                                </div>
+                                <c:forEach items="#{userSession.listarChat(userSession.pqrsObj.idpqrs)}" var="listMessages">
+
+                                    <div class="media py-4 border-bottom">
+                                        <c:forEach items="#{userSession.listarDatosUsuario(listMessages.usuarioIdusuario.idusuario)}" var="idimg1">
+                                            <h:graphicImage style="width: 50px; height: 50px ; border-radius: 50%;" class="avatar-img" value="/imgprofile/#{idimg1.fotoPerfil}" alt="img-x"/>
+                                        </c:forEach>
+                                        <div class="media-body pl-3">
+                                            <h6 class="font-size-md mb-2">#{listMessages.usuarioIdusuario.nombre} #{listMessages.usuarioIdusuario.apellido}</h6>
+                                            <p class="font-size-md mb-1">#{listMessages.messageText}</p>
+                                        </div>
+                                    </div>
+
+
+
+                                </c:forEach>
+                            </c:forEach>
+                            <!-- Leave message-->
+                            <h3 class="h5 mt-2 pt-4 pb-2">Dejar mensaje</h3>
+                            <h:form class="needs-validation" html5:novalidate="true">
+                                <div class="form-group">
+                                    <h:inputTextarea class="form-control" rows="8" html5:placeholder="Tu mensaje va aquí..." required="true" value="#{pqrsView.message_text}"/>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                    <div >
+                                    </div>
+                                    <h:commandButton class="btn btn-primary my-2" value="Enviar" action="#{pqrsView.registerMessage(userSession.pqrsObj.idpqrs)}"/>
+                                </div>
+                            </h:form>
+
+                        </section>
+                        <!-- End Form -->
+                    </div>
+                    <!-- End Body -->
+                </div>
+                <!-- End Card -->
+
+            </div>
+
+
+            <!-- Footer -->
+
+            <div class="footer">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col">
+                        <p class="font-size-sm mb-0">&copy;<span class="d-none d-sm-inline-block">2020 GAES 6 2025329.</span></p>
+                    </div>
+                    <div class="col-auto">
+                        <div class="d-flex justify-content-end">
+                            <!-- List Dot -->
+                            <ul class="list-inline list-separator">
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">FAQ</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">License</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <!-- Keyboard Shortcuts Toggle -->
+                                    <div class="hs-unfold">
+                                        <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle" href="javascript:;"
+                                           data-hs-unfold-options='{
+                                           "target": "#keyboardShortcutsSidebar",
+                                           "type": "css-animation",
+                                           "animationIn": "fadeInRight",
+                                           "animationOut": "fadeOutRight",
+                                           "hasOverlay": true,
+                                           "smartPositionOff": true
+                                           }'>
+                                            <i class="tio-command-key"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End Keyboard Shortcuts Toggle -->
+                                </li>
+                            </ul>
+                            <!-- End List Dot -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End Footer -->
+        </main>
+
+        <!-- Keyboard Shortcuts -->
+        <div id="keyboardShortcutsSidebar" class="hs-unfold-content sidebar sidebar-bordered sidebar-box-shadow">
+            <div class="card card-lg sidebar-card sidebar-scrollbar">
+                <div class="card-header">
+                    <h4 class="card-header-title">Keyboard shortcuts</h4>
+
+                    <!-- Toggle Button -->
+                    <a class="js-hs-unfold-invoker btn btn-icon btn-xs btn-ghost-dark ml-2" href="javascript:;"
+                       data-hs-unfold-options='{
+                       "target": "#keyboardShortcutsSidebar",
+                       "type": "css-animation",
+                       "animationIn": "fadeInRight",
+                       "animationOut": "fadeOutRight",
+                       "hasOverlay": true,
+                       "smartPositionOff": true
+                       }'>
+                        <i class="tio-clear tio-lg"></i>
+                    </a>
+                    <!-- End Toggle Button -->
+                </div>
+
+                <!-- Body -->
+                <div class="card-body sidebar-body">
+                    <div class="list-group list-group-sm list-group-flush list-group-no-gutters mb-5">
+                        <div class="list-group-item">
+                            <h5 class="mb-1">Formatting</h5>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span class="font-weight-bold">Bold</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">b</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <em>italic</em>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">i</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <u>Underline</u>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">u</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <s>Strikethrough</s>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Alt</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">s</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span class="small">Small text</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">s</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <mark>Highlight</mark>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">e</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group list-group-sm list-group-flush list-group-no-gutters mb-5">
+                        <div class="list-group-item">
+                            <h5 class="mb-1">Insert</h5>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Mention person <a href="#">(@Brian)</a></span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">@</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Link to doc <a href="#">(+Meeting notes)</a></span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">+</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <a href="#">#hashtag</a>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">#hashtag</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Date</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">/date</kbd>
+                                    <kbd class="d-inline-block mb-1">Space</kbd>
+                                    <kbd class="d-inline-block mb-1">/datetime</kbd>
+                                    <kbd class="d-inline-block mb-1">/datetime</kbd>
+                                    <kbd class="d-inline-block mb-1">Space</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Time</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">/time</kbd>
+                                    <kbd class="d-inline-block mb-1">Space</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Note box</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">/note</kbd>
+                                    <kbd class="d-inline-block mb-1">Enter</kbd>
+                                    <kbd class="d-inline-block mb-1">/note red</kbd>
+                                    <kbd class="d-inline-block mb-1">/note red</kbd>
+                                    <kbd class="d-inline-block mb-1">Enter</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group list-group-sm list-group-flush list-group-no-gutters mb-5">
+                        <div class="list-group-item">
+                            <h5 class="mb-1">Editing</h5>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Find and replace</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">r</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Find next</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">n</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Find previous</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">p</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Indent</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Tab</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Un-indent</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Shift</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Tab</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Move line up</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Shift</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1"><i class="tio-arrow-large-upward-outlined"></i></kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Move line down</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Shift</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1"><i class="tio-arrow-large-downward-outlined font-size-sm"></i></kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Add a comment</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Alt</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">m</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Undo</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">z</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Redo</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">y</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group list-group-sm list-group-flush list-group-no-gutters">
+                        <div class="list-group-item">
+                            <h5 class="mb-1">Application</h5>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Create new doc</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Alt</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">n</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Present</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Shift</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">p</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Share</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Shift</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">s</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Search docs</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Shift</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">o</kbd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-5">
+                                    <span>Keyboard shortcuts</span>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <kbd class="d-inline-block mb-1">Ctrl</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">Shift</kbd> <small class="text-muted">+</small> <kbd class="d-inline-block mb-1">/</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Body -->
+            </div>
+        </div>
+        <!-- End Keyboard Shortcuts -->
+
+        <!-- Activity -->
+        <div id="activitySidebar" class="hs-unfold-content sidebar sidebar-bordered sidebar-box-shadow sidebar-scrollbar">
+            <div class="card card-lg sidebar-card">
+                <div class="card-header">
+                    <h4 class="card-header-title">Activity stream</h4>
+
+                    <!-- Toggle Button -->
+                    <a class="js-hs-unfold-invoker btn btn-icon btn-xs btn-ghost-dark ml-2" href="javascript:;"
+                       data-hs-unfold-options='{
+                       "target": "#activitySidebar",
+                       "type": "css-animation",
+                       "animationIn": "fadeInRight",
+                       "animationOut": "fadeOutRight",
+                       "hasOverlay": true,
+                       "smartPositionOff": true
+                       }'>
+                        <i class="tio-clear tio-lg"></i>
+                    </a>
+                    <!-- End Toggle Button -->
+                </div>
+
+                <!-- Body -->
+                <div class="card-body sidebar-body">
+                    <!-- Step -->
+                    <ul class="step step-icon-sm step-avatar-sm">
+                        <!-- Step Item -->
+                        <li class="step-item">
+                            <div class="step-content-wrapper">
+                                <div class="step-avatar">
+                                    <img class="step-avatar-img" src="#{request.contextPath}/assets/img/160x160/img9.jpg" alt="Image Description"/>
+                                </div>
+
+                                <div class="step-content">
+                                    <h5 class="mb-1">Iana Robinson</h5>
+
+                                    <p class="font-size-sm mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i class="tio-folder-bookmarked"></i> Fd-7</a></p>
+
+                                    <ul class="list-group list-group-sm">
+                                        <!-- List Item -->
+                                        <li class="list-group-item list-group-item-light">
+                                            <div class="row gx-1">
+                                                <div class="col-6">
+                                                    <div class="media">
+                                                        <span class="mt-1 mr-2">
+                                                            <img class="avatar avatar-xs" src="#{request.contextPath}/assets/svg/brands/excel.svg" alt="Image Description"/>
+                                                        </span>
+                                                        <div class="media-body text-truncate">
+                                                            <span class="d-block font-size-sm text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                            <small class="d-block text-muted">12kb</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="media">
+                                                        <span class="mt-1 mr-2">
+                                                            <img class="avatar avatar-xs" src="#{request.contextPath}/assets/svg/brands/word.svg" alt="Image Description"/>
+                                                        </span>
+                                                        <div class="media-body text-truncate">
+                                                            <span class="d-block font-size-sm text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                            <small class="d-block text-muted">4kb</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- End List Item -->
+                                    </ul>
+
+                                    <small class="text-muted text-uppercase">Now</small>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End Step Item -->
+
+                        <!-- Step Item -->
+                        <li class="step-item">
+                            <div class="step-content-wrapper">
+                                <span class="step-icon step-icon-soft-dark">B</span>
+
+                                <div class="step-content">
+                                    <h5 class="mb-1">Bob Dean</h5>
+
+                                    <p class="font-size-sm mb-1">Marked <a class="text-uppercase" href="#"><i class="tio-folder-bookmarked"></i> Fr-6</a> as <span class="badge badge-soft-success badge-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+
+                                    <small class="text-muted text-uppercase">Today</small>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End Step Item -->
+
+                        <!-- Step Item -->
+                        <li class="step-item">
+                            <div class="step-content-wrapper">
+                                <div class="step-avatar">
+                                    <img class="step-avatar-img" src="#{request.contextPath}/assets/img/160x160/img3.jpg" alt="Image Description"/>
+                                </div>
+
+                                <div class="step-content">
+                                    <h5 class="h5 mb-1">Crane</h5>
+
+                                    <p class="font-size-sm mb-1">Added 5 card to <a href="#">Payments</a></p>
+
+                                    <ul class="list-group list-group-sm">
+                                        <li class="list-group-item list-group-item-light">
+                                            <div class="row gx-1">
+                                                <div class="col">
+                                                    <img class="img-fluid rounded ie-sidebar-activity-img" src="#{request.contextPath}/assets/svg/illustrations/card-1.svg" alt="Image Description"/>
+                                                </div>
+                                                <div class="col">
+                                                    <img class="img-fluid rounded ie-sidebar-activity-img" src="#{request.contextPath}/assets/svg/illustrations/card-2.svg" alt="Image Description"/>
+                                                </div>
+                                                <div class="col">
+                                                    <img class="img-fluid rounded ie-sidebar-activity-img" src="#{request.contextPath}/assets/svg/illustrations/card-3.svg" alt="Image Description"/>
+                                                </div>
+                                                <div class="col-auto align-self-center">
+                                                    <div class="text-center">
+                                                        <a href="#">+2</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <small class="text-muted text-uppercase">May 12</small>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End Step Item -->
+
+                        <!-- Step Item -->
+                        <li class="step-item">
+                            <div class="step-content-wrapper">
+                                <span class="step-icon step-icon-soft-info">D</span>
+
+                                <div class="step-content">
+                                    <h5 class="mb-1">David Lidell</h5>
+
+                                    <p class="font-size-sm mb-1">Added a new member to Front Dashboard</p>
+
+                                    <small class="text-muted text-uppercase">May 15</small>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End Step Item -->
+
+                        <!-- Step Item -->
+                        <li class="step-item">
+                            <div class="step-content-wrapper">
+                                <div class="step-avatar">
+                                    <img class="step-avatar-img" src="#{request.contextPath}/assets/img/160x160/img7.jpg" alt="Image Description"/>
+                                </div>
+
+                                <div class="step-content">
+                                    <h5 class="mb-1">Rachel King</h5>
+
+                                    <p class="font-size-sm mb-1">Marked <a class="text-uppercase" href="#"><i class="tio-folder-bookmarked"></i> Fr-3</a> as <span class="badge badge-soft-success badge-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+
+                                    <small class="text-muted text-uppercase">Apr 29</small>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End Step Item -->
+
+                        <!-- Step Item -->
+                        <li class="step-item">
+                            <div class="step-content-wrapper">
+                                <div class="step-avatar">
+                                    <img class="step-avatar-img" src="#{request.contextPath}/assets/img/160x160/img5.jpg" alt="Image Description"/>
+                                </div>
+
+                                <div class="step-content">
+                                    <h5 class="mb-1">Finch Hoot</h5>
+
+                                    <p class="font-size-sm mb-1">Earned a "Top endorsed" <i class="tio-verified text-primary"></i> badge</p>
+
+                                    <small class="text-muted text-uppercase">Apr 06</small>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End Step Item -->
+
+                        <!-- Step Item -->
+                        <li class="step-item">
+                            <div class="step-content-wrapper">
+                                <span class="step-icon step-icon-soft-primary">
+                                    <i class="tio-user"></i>
+                                </span>
+
+                                <div class="step-content">
+                                    <h5 class="mb-1">Project status updated</h5>
+
+                                    <p class="font-size-sm mb-1">Marked <a class="text-uppercase" href="#"><i class="tio-folder-bookmarked"></i> Fr-3</a> as <span class="badge badge-soft-primary badge-pill"><span class="legend-indicator bg-primary"></span>"In progress"</span></p>
+
+                                    <small class="text-muted text-uppercase">Feb 10</small>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End Step Item -->
+                    </ul>
+                    <!-- End Step -->
+
+                    <a class="btn btn-block btn-white" href="javascript:;">View all <i class="tio-chevron-right"></i></a>
+                </div>
+                <!-- End Body -->
+            </div>
+        </div>
+        <!-- End Activity -->
+
+        <!-- Create a new user Modal -->
+        <div class="modal fade" id="inviteUserModal" tabindex="-1" role="dialog" aria-labelledby="inviteUserModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h4 id="inviteUserModalTitle" class="modal-title">Invite users</h4>
+
+                        <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                            <i class="tio-clear tio-lg"></i>
+                        </button>
+                    </div>
+                    <!-- End Header -->
+
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <div class="input-group input-group-merge mb-2 mb-sm-0">
+                                <div class="input-group-prepend" id="fullName">
+                                    <span class="input-group-text">
+                                        <i class="tio-search"></i>
+                                    </span>
+                                </div>
+
+                                <input type="text" class="form-control" name="fullName" placeholder="Search name or emails" aria-label="Search name or emails" aria-describedby="fullName"/>
+
+                                <div class="input-group-append input-group-append-last-sm-down-none">
+                                    <!-- Select -->
+                                    <div id="permissionSelect" class="select2-custom select2-custom-right">
+                                        <select class="js-select2-custom"
+                                                data-hs-select2-options='{
+                                                "dropdownParent": "#permissionSelect",
+                                                "minimumResultsForSearch": "Infinity",
+                                                "dropdownAutoWidth": true,
+                                                "dropdownWidth": "11rem"
+                                                }'>
+                                            <option value="guest" selected="true">Guest</option>
+                                            <option value="can edit">Can edit</option>
+                                            <option value="can comment">Can comment</option>
+                                            <option value="full access">Full access</option>
+                                        </select>
+                                    </div>
+                                    <!-- End Select -->
+
+                                    <a class="btn btn-primary d-none d-sm-block" href="javascript:;">Invite</a>
+                                </div>
+                            </div>
+
+                            <a class="btn btn-block btn-primary d-sm-none" href="javascript:;">Invite</a>
+                        </div>
+                        <!-- End Form Group -->
+
+                        <div class="form-row">
+                            <h5 class="col modal-title">Invite users</h5>
+
+                            <div class="col-auto">
+                                <a class="d-flex align-items-center font-size-sm text-body" href="#">
+                                    <img class="avatar avatar-xss mr-2" src="#{request.contextPath}/assetssvg/brands/gmail.svg" alt="Image Description"/>
+                                    Import contacts
+                                </a>
+                            </div>
+                        </div>
+
+                        <hr class="mt-2"></hr>
+
+                        <ul class="list-unstyled list-unstyled-py-4">
+                            <!-- List Group Item -->
+                            <li>
+                                <div class="media">
+                                    <div class="avatar avatar-sm avatar-circle mr-3">
+                                        <img class="avatar-img" src="#{request.contextPath}/assetsimg/160x160/img10.jpg" alt="Image Description"/>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-sm">
+                                                <h5 class="text-body mb-0">Amanda Harvey <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></h5>
+                                                <span class="d-block font-size-sm">amanda@example.com</span>
+                                            </div>
+
+                                            <div class="col-sm">
+                                                <!-- Select -->
+                                                <div id="inviteUserSelect1" class="select2-custom select2-custom-sm-right d-sm-flex justify-content-sm-end">
+                                                    <select class="js-select2-custom"
+                                                            data-hs-select2-options='{
+                                                            "dropdownParent": "#inviteUserSelect1",
+                                                            "minimumResultsForSearch": "Infinity",
+                                                            "customClass": "custom-select custom-select-sm custom-select-borderless pl-0",
+                                                            "dropdownAutoWidth": true,
+                                                            "width": true
+                                                            }'>
+                                                        <option value="guest" selected="true">Guest</option>
+                                                        <option value="can edit">Can edit</option>
+                                                        <option value="can comment">Can comment</option>
+                                                        <option value="full access">Full access</option>
+                                                        <option value="remove" data-option-template='&lt;span class=&quot;text-danger&quot;&gt;Remove&lt;/span&gt;'>Remove</option>
+                                                    </select>
+                                                </div>
+                                                <!-- End Select -->
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- End List Group Item -->
+
+                            <!-- List Group Item -->
+                            <li>
+                                <div class="media">
+                                    <div class="avatar avatar-sm avatar-circle mr-3">
+                                        <img class="avatar-img" src="#{request.contextPath}/assetsimg/160x160/img3.jpg" alt="Image Description"/>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-sm">
+                                                <h5 class="text-body mb-0">David Harrison</h5>
+                                                <span class="d-block font-size-sm">david@example.com</span>
+                                            </div>
+
+                                            <div class="col-sm">
+                                                <!-- Select -->
+                                                <div id="inviteUserSelect2" class="select2-custom select2-custom-sm-right d-sm-flex justify-content-sm-end">
+                                                    <select class="js-select2-custom"
+                                                            data-hs-select2-options='{
+                                                            "dropdownParent": "#inviteUserSelect2",
+                                                            "minimumResultsForSearch": "Infinity",
+                                                            "customClass": "custom-select custom-select-sm custom-select-borderless pl-0",
+                                                            "dropdownAutoWidth": true,
+                                                            "width": true
+                                                            }'>
+                                                        <option value="guest" selected="true">Guest</option>
+                                                        <option value="can edit">Can edit</option>
+                                                        <option value="can comment">Can comment</option>
+                                                        <option value="full access">Full access</option>
+                                                        <option value="remove" data-option-template='&lt;span class=&quot;text-danger&quot;&gt;Remove&lt;/span&gt;'>Remove</option>
+                                                    </select>
+                                                </div>
+                                                <!-- End Select -->
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- End List Group Item -->
+
+                            <!-- List Group Item -->
+                            <li>
+                                <div class="media">
+                                    <div class="avatar avatar-sm avatar-circle mr-3">
+                                        <img class="avatar-img" src="#{request.contextPath}/assetsimg/160x160/img9.jpg" alt="Image Description"/>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-sm">
+                                                <h5 class="text-body mb-0">Ella Lauda <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></h5>
+                                                <span class="d-block font-size-sm">Markvt@example.com</span>
+                                            </div>
+
+                                            <div class="col-sm">
+                                                <!-- Select -->
+                                                <div id="inviteUserSelect4" class="select2-custom select2-custom-sm-right d-sm-flex justify-content-sm-end">
+                                                    <select class="js-select2-custom"
+                                                            data-hs-select2-options='{
+                                                            "dropdownParent": "#inviteUserSelect4",
+                                                            "minimumResultsForSearch": "Infinity",
+                                                            "customClass": "custom-select custom-select-sm custom-select-borderless pl-0",
+                                                            "dropdownAutoWidth": true,
+                                                            "width": true
+                                                            }'>
+                                                        <option value="guest" selected="true">Guest</option>
+                                                        <option value="can edit">Can edit</option>
+                                                        <option value="can comment">Can comment</option>
+                                                        <option value="full access">Full access</option>
+                                                        <option value="remove" data-option-template='&lt;span class=&quot;text-danger&quot;&gt;Remove&lt;/span&gt;'>Remove</option>
+                                                    </select>
+                                                </div>
+                                                <!-- End Select -->
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- End List Group Item -->
+
+                            <!-- List Group Item -->
+                            <li>
+                                <div class="media">
+                                    <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
+                                        <span class="avatar-initials">B</span>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-sm">
+                                                <h5 class="text-body mb-0">Bob Dean</h5>
+                                                <span class="d-block font-size-sm">bob@example.com</span>
+                                            </div>
+
+                                            <div class="col-sm">
+                                                <!-- Select -->
+                                                <div id="inviteUserSelect3" class="select2-custom select2-custom-sm-right d-sm-flex justify-content-sm-end">
+                                                    <select class="js-select2-custom"
+                                                            data-hs-select2-options='{
+                                                            "dropdownParent": "#inviteUserSelect3",
+                                                            "minimumResultsForSearch": "Infinity",
+                                                            "customClass": "custom-select custom-select-sm custom-select-borderless pl-0",
+                                                            "dropdownAutoWidth": true,
+                                                            "width": true
+                                                            }'>
+                                                        <option value="guest" selected="true">Guest</option>
+                                                        <option value="can edit">Can edit</option>
+                                                        <option value="can comment">Can comment</option>
+                                                        <option value="full access">Full access</option>
+                                                        <option value="remove" data-option-template='&lt;span class=&quot;text-danger&quot;&gt;Remove&lt;/span&gt;'>Remove</option>
+                                                    </select>
+                                                </div>
+                                                <!-- End Select -->
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- End List Group Item -->
+                        </ul>
+                    </div>
+                    <!-- End Body -->
+
+                    <!-- Footer -->
+                    <div class="modal-footer justify-content-start">
+                        <div class="row align-items-center flex-grow-1 mx-n2">
+                            <div class="col-sm-9 mb-2 mb-sm-0">
+                                <input type="hidden" id="inviteUserPublicClipboard" value="https://themes.getbootstrap.com/product/front-multipurpose-responsive-template/"/>
+
+                                <p class="modal-footer-text">The public share <a href="#">link settings</a>
+                                    <i class="tio-help-outlined" data-toggle="tooltip" data-placement="top" title="The public share link allows people to view the project without giving access to full collaboration features."></i>
+                                </p>
+                            </div>
+
+                            <div class="col-sm-3 text-sm-right">
+                                <a class="js-clipboard btn btn-sm btn-white text-nowrap" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Copy to clipboard!"
+                                   data-hs-clipboard-options='{
+                                   "type": "tooltip",
+                                   "successText": "Copied!",
+                                   "contentTarget": "#inviteUserPublicClipboard",
+                                   "container": "#inviteUserModal"
+                                   }'>
+                                    <i class="tio-link mr-1"></i> Copy link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Footer -->
+                </form>
+            </div>
+        </div>
+        <!-- End Create a new user Modal -->
+
+    </ui:composition>
+
+
+</html>
+

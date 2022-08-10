@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+
+        <!-- Open Ticket Modal-->
+        <h:form class="needs-validation modal fade" html5:method="post" id="open-ticket" html5:tabindex="-1" html5:novalidate="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Abrir PQRS</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-muted font-size-sm">Normalmente respondemos en 2 días hábiles.</p>
+                        <!--                  <div class="form-group">
+                                             <label for="ticket-subject">Título</label>
+                                             <h:inputText class="form-control" id="ticket-subject" required="true" value=""/>
+                                             <div class="invalid-feedback">Por favor escribe un título!</div>
+                                          </div>-->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="ticket-category">Categoría</label>
+                                    <h:selectOneMenu class="form-control custom-select" id="ticket-category" required="true" value="#{pqrsView.tipo_pqrs_idtipo_pqrs}">
+                                        <f:selectItems value="#{pqrsView.listaTipoPqrs}" var="listaTipo" itemLabel="#{listaTipo.nombreTipoPqrs}" itemValue="#{listaTipo.idtipoPqrs}"></f:selectItems>
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="ticket-priority">Prioridad</label>
+                                    <h:selectOneMenu class="form-control custom-select" id="ticket-priority" required="true" value="#{pqrsView.prioridad_idprioridad}">
+                                        <f:selectItems value="#{pqrsView.listaPrioridadPqrs}" var="listaPrioridad" itemLabel="#{listaPrioridad.nombrePrioridad}" itemValue="#{listaPrioridad.idprioridad}"></f:selectItems>
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback">Por favor cuéntanos que tan urgente es tu PQRS!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-description">Describe tu problema</label>
+                            <h:inputTextarea class="form-control" id="ticket-description" rows="8" required="true" value="#{pqrsView.descripcion}"></h:inputTextarea>
+                            <div class="invalid-feedback">Por favor cuéntanos más!</div>
+                        </div>
+                        <!--                  <div class="custom-file mb-3">
+                                             <input class="custom-file-input" type="file" id="file-input"/>
+                                             <label class="custom-file-label" for="file-input">Subir archivo (opcional)...</label>
+                                          </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                        <h:commandButton class="btn btn-primary" value="Register" action="#{pqrsView.registrarPqrs()}"></h:commandButton>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <!-- Page title-->
+        <!-- Page Title-->
+        <div class="page-title-overlap bg-dark pt-4">
+            <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+                <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                            <li class="breadcrumb-item"><a class="text-nowrap" href="../../cliente-index.html"><i class="czi-home"></i>Inicio</a></li>
+                            <li class="breadcrumb-item text-nowrap"><a href="#">Cuenta</a>
+                            </li>
+                            <li class="breadcrumb-item text-nowrap active" aria-current="page">Servicio al cliente</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+                    <h1 class="h3 text-light mb-0">Mis entradas | Servicio al Cliente</h1>
+                </div>
+            </div>
+        </div>
+        <!-- Page Content-->
+        <div class="container pb-5 mb-2 mb-md-3">
+            <div class="row">
+                <!-- Sidebar-->
+                <aside class="col-lg-4 pt-4 pt-lg-0">
+                    <div class="cz-sidebar-static rounded-lg box-shadow-lg px-0 pb-0 mb-5 mb-lg-0">
+                        <div class="px-4 mb-4">
+                            <div class="media align-items-center">
+                                <p:avatar styleClass="p-mr-2" size="xlarge" shape="circle">
+                                    <h:graphicImage value="/imgprofile/#{userSession.usuarioLogin.fotoPerfil}" />
+                                </p:avatar>
+                                <div class="media-body pl-3">
+                                    <h3 class="font-size-base mb-0">#{userSession.usuarioLogin.nombre} #{userSession.usuarioLogin.apellido}</h3>
+                                    <span class="text-accent font-size-sm">#{userSession.usuarioLogin.email}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-secondary px-4 py-3">
+                            <h3 class="font-size-sm mb-0 text-muted">Dashboard</h3>
+                        </div>
+                        <ul class="list-unstyled mb-0">
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/perfil-ordenes.xhtml"><i class="czi-bag opacity-60 mr-2"></i>Órdenes<span class="font-size-sm text-muted ml-auto">#{ordenSession.listarOrdenPendientesUsuario().size()}</span></a>
+                            </li>
+                            <!--<li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-wishlist.html"><i class="czi-heart opacity-60 mr-2"></i>Wishlist<span class="font-size-sm text-muted ml-auto">3</span></a>
+                            </li>-->
+                            <li class="mb-0 border-bottom">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="#{request.contextPath}/usuarios/client/servicio-al-cliente.xhtml"><i class="czi-help opacity-60 mr-2"></i>Servicio al cliente</a>
+                            </li>
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/perfil.xhtml"><i class="czi-user opacity-60 mr-2"></i>Perfil</a>
+                            </li>
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/direcciones.xhtml"><i class="czi-location opacity-60 mr-2"></i>Direcciones</a>
+                            </li>
+
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/telefonos.xhtml"><i class="czi-mobile opacity-60 mr-2"></i>Telefonos</a>
+                            </li>
+                            <!--<li class="mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-payment.html"><i class="czi-card opacity-60 mr-2"></i>Payment methods</a>
+                            </li>-->
+                            <li class="d-lg-none border-top mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/index.xhtml"><i class="czi-sign-out opacity-60 mr-2"></i>Salir</a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                </aside>
+                <!-- Content  -->
+                <section class="col-lg-8">
+                    <!-- Toolbar-->
+                    <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
+                        <div class="form-inline">
+                            <label class="text-light opacity-75 text-nowrap mr-2 d-none d-lg-block" for="order-sort">Filtrar:</label>
+                            <select class="form-control custom-select" id="order-sort">
+                                <option>Todas</option>
+                                <option>Abiertas</option>
+                                <option>Cerradas</option>
+                            </select>
+                        </div>
+                        <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="../../index.html"><i class="czi-sign-out mr-2"></i>Salir</a>
+                    </div>
+                    <!-- Tickets list-->
+                    <div class="table-responsive font-size-md">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Fecha Actualización</th>
+                                    <th>Tipo</th>
+                                    <th>Prioridad</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <c:forEach items="#{userSession.listarPqrsUsuario()}" var="pqrsUsuario">
+                                    <tr>
+                                        <h:form>
+                                            <td class="py-3">
+                                                <h:commandLink class="nav-link-style font-weight-medium" action="#{userSession.seleccionPqrs(userSession.usuarioLogin.idusuario, pqrsUsuario.idpqrs)}">
+                                                    #{pqrsUsuario.descripcion}
+                                                </h:commandLink>
+                                            </td>
+
+                                            <td class="py-3">#{pqrsUsuario.fechaRegistroPqrs}</td>
+                                            <td class="py-3">#{pqrsUsuario.fechaActualizacionPqrs}</td>
+                                            <td class="py-3">#{pqrsUsuario.tipoPqrsIdtipoPqrs.nombreTipoPqrs}</td>
+                                            <td class="py-3">
+
+                                                <c:if test="#{pqrsUsuario.prioridadIdprioridad.nombrePrioridad.equals('Urgente')}">
+                                                    <span class="badge badge-danger m-0">
+                                                        #{pqrsUsuario.prioridadIdprioridad.nombrePrioridad}
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{pqrsUsuario.prioridadIdprioridad.nombrePrioridad.equals('Alta')}">
+                                                    <span class="badge badge-warning m-0">
+                                                        #{pqrsUsuario.prioridadIdprioridad.nombrePrioridad}
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{pqrsUsuario.prioridadIdprioridad.nombrePrioridad.equals('Normal')}">
+                                                    <span class="badge badge-info m-0">
+                                                        #{pqrsUsuario.prioridadIdprioridad.nombrePrioridad}
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{pqrsUsuario.prioridadIdprioridad.nombrePrioridad.equals('Baja')}">
+                                                    <span class="badge badge-success m-0">
+                                                        #{pqrsUsuario.prioridadIdprioridad.nombrePrioridad}
+                                                    </span>
+                                                </c:if>
+                                            </td>
+                                            <td class="py-3">
+                                                <c:if test="#{pqrsUsuario.estadoPqrsIdestadoPqrs.nombreEstadoPqrs.equals('Abierta')}">
+                                                    <span class="badge badge-success m-0">
+                                                        #{pqrsUsuario.estadoPqrsIdestadoPqrs.nombreEstadoPqrs}
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{pqrsUsuario.estadoPqrsIdestadoPqrs.nombreEstadoPqrs.equals('Respondida')}">
+                                                    <span class="badge badge-secondary m-0">
+                                                        #{pqrsUsuario.estadoPqrsIdestadoPqrs.nombreEstadoPqrs}
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{pqrsUsuario.estadoPqrsIdestadoPqrs.nombreEstadoPqrs.equals('Cerrada')}">
+                                                    <span class="badge badge-dark m-0">
+                                                        #{pqrsUsuario.estadoPqrsIdestadoPqrs.nombreEstadoPqrs}
+                                                    </span>
+                                                </c:if>
+                                            </td>
+                                        </h:form>
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="mb-4"></hr>
+                    <div class="text-right">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#open-ticket">Abrir PQRS</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </ui:composition>
+
+
+</html>
+

@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:composition>
+
+        <!-- Order Details Modal-->
+
+        <!-- Page Title (Dark)-->
+        <div class="bg-dark py-4">
+            <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+                <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                            <li class="breadcrumb-item"><a class="text-nowrap"><i class="czi-home"></i>Inicio</a></li>
+                            <li class="breadcrumb-item text-nowrap"><a>Menu</a>
+                            </li>
+                            <li class="breadcrumb-item text-nowrap active" aria-current="page">Rastrear Orden</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+                    <h1 class="h3 text-light mb-0">Seguimiento: <span class="h4 font-weight-normal text-light">#{ventasSession.selectorOrdenUsuario.codigoOrden}</span></h1>
+                </div>
+            </div>
+        </div>
+        <!-- Page Content-->
+        <div class="container py-5 mb-2 mb-md-3">
+            <!-- Details-->
+            <div class="row mb-4">
+                <div class="col-sm-4 mb-2">
+                    <div class="bg-secondary p-4 text-center rounded-lg"><span class="font-weight-medium text-dark mr-2">Nombre Domiciliario: </span>#{ventasSession.objDomicilio.nombreDomiciliario} </div>
+                </div>
+                <div class="col-sm-4 mb-2">
+                    <div class="bg-secondary p-4 text-center rounded-lg"><span class="font-weight-medium text-dark mr-2">Estado Actual: </span>#{ventasSession.selectorOrdenUsuario.estadoOrdenIdestadoOrden.nombreEstadoOrden}</div>
+                </div>
+                <div class="col-sm-4 mb-2">
+                    <div class="bg-secondary p-4 text-center rounded-lg"><span class="font-weight-medium text-dark mr-2">Fecha: </span>#{ventasSession.selectorOrdenUsuario.fecha}</div>
+                </div>
+            </div>
+            <!-- Progress-->
+            <div class="card border-0 box-shadow-lg">
+                <div class="card-body pb-2">
+
+                    <ul class="nav nav-tabs media-tabs nav-justified">
+                        <c:forEach items="#{ventasSession.horaEstadoOrdenCliente()}" var="estadoOrden">
+                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                <li class="nav-item">
+                                    <c:if test="#{estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals(estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden)}">
+                                        <div class="nav-link active">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-bag"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Orden Recibida</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{!estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals(estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden)}">
+                                        <div class="nav-link completed">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-bag"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Orden Recibida</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </li>
+                            </c:if>
+                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                <li class="nav-item">
+                                    <c:if test="#{estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals(estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden)}">
+                                        <div class="nav-link active">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-settings"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Preparando Orden</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{!estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals(estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden)}">
+                                        <div class="nav-link completed">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-settings"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Preparando Orden</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </li>
+                            </c:if>
+
+
+                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                <li class="nav-item">
+                                    <c:if test="#{estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals(estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden)}">
+                                        <div class="nav-link active">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-star"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Enviando orden</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{!estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals(estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden)}">
+                                        <div class="nav-link completed">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-star"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Enviando orden</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </li>
+                            </c:if>
+
+                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Entregada')}">
+                                <li class="nav-item">
+                                    <c:if test="#{estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals(estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden)}">
+                                        <div class="nav-link active">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-package"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Orden Entregada</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{estadoOrden.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Completada')}">
+                                        <div class="nav-link completed">
+                                            <div class="media align-items-center">
+                                                <div class="media-tab-media mr-3"><i class="czi-package"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-tab-title text-nowrap mb-0">Orden Entregada</h6>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.fecha}</div>
+                                                    <div class="media-tab-subtitle text-muted font-size-xs mb-1">#{estadoOrden.hora}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </li>
+                            </c:if>
+
+                        </c:forEach>
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:composition>
+
+</html>

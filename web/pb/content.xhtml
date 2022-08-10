@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:composition>
+
+
+        <!-- Page title-->
+        <!-- Page Content-->
+        <div class="container py-4 py-lg-5 my-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <h2 class="h3 mb-4">Olvidaste tu contraseña?</h2>
+                    <p class="font-size-md">Cambia tu contraseña en tres sencillos pasos. Esto te ayudará a mantener tu cuenta segura.</p>
+                    <ol class="list-unstyled font-size-md">
+                        <li><span class="text-primary mr-2">1.</span>Ingresa tu correo en el siguiente campo.</li>
+                        <li><span class="text-primary mr-2">2.</span>Te enviarémos un correo electrónico con una nueva contraseña</li>
+                        <li><span class="text-primary mr-2">3.</span>Ingresa con esta contraseña y en tu perfil puedes realizar el cambio por una nueva.</li>
+                    </ol>
+
+
+                    <div class="card py-2 mt-4">
+                        <h:form class="card-body needs-validation" html5:novalidate="true">
+                            <div class="form-group">
+                                <label for="recover-email">Ingresa tu Email</label>
+                                <h:inputText value="#{userSession.correoIn}" class="form-control" id="recover-email" required="true"/>
+                                <div class="valid-feedback">Por favor ingrese un correo válido.</div>
+                            </div>
+                            <div class="d-flex flex-wrap justify-content-between">
+                                <div class="custom-control custom-checkbox">
+
+                                </div>
+                                <!-- Basic example -->
+                                <nav aria-label="breadcrumb"  >
+                                    <ol class="breadcrumb mt-2">
+                                        <li class="breadcrumb-item"><a href="#{request.contextPath}/pb/login.xhtml">Iniciar</a></li>
+                                        <li class="breadcrumb-item"><a href="#{request.contextPath}/pb/register.xhtml">Registrar</a></li>
+                                    </ol>
+                                </nav>
+
+                            </div>
+                            <h:commandLink action="#{userSession.recuperarClave()}" class="btn btn-primary" type="submit">Enviar contraseña</h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:composition>
+
+</html>

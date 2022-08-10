@@ -1,0 +1,607 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <!-- End Navbar Vertical -->
+
+        <main id="content" role="main" class="main">
+
+            <c:forEach items="#{userSession.listarDatosPerfilUsuario()}" var="dataUser">
+
+                <!-- Content -->
+                <div class="content container-fluid">
+                    <div class="row justify-content-lg-center">
+                        <div class="col-lg-10">
+                            <!-- Profile Cover -->
+                            <div class="profile-cover">
+                                <div class="profile-cover-img-wrapper">
+                                    <img id="profileCoverImg" class="profile-cover-img" src="#{request.contextPath}/assets/img/1920x400/img2.jpg" alt="Image Description"/>
+
+                                    <h:form enctype="multipart/form-data">
+                                        <!-- Custom File Cover -->
+                                        <div class="profile-cover-content profile-cover-btn">
+                                            <div class="custom-file-btn">
+                                                <h:inputFile value="#{userSession.archivoImagen}"
+                                                             class="js-file-attach custom-file-btn-input" 
+                                                             id="profileCoverUplaoder" 
+                                                             html5:data-hs-file-attach-options='{
+                                                             "textTarget": "#profileCoverImg",
+                                                             "mode": "image",
+                                                             "targetAttr": "src",
+                                                             "allowTypes": [".png", ".jpeg", ".jpg"]
+                                                             }'/>
+                                                <h:commandLink action="#{userSession.cargarImagenPerfil()}" class="custom-file-btn-label btn btn-sm btn-white" html5:for="profileCoverUplaoder">
+                                                    <i class="tio-add-photo"></i>
+                                                    <span class="d-none d-sm-inline-block ml-1">Update your header</span>
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+                                        <!-- End Custom File Cover -->
+                                    </h:form>
+                                </div>
+                            </div>
+                            <!-- End Profile Cover -->
+
+                            <!-- Profile Header -->
+                            <div class="text-center mb-5">
+                                <!-- Avatar -->
+                                <label class="avatar avatar-xxl avatar-circle avatar-border-lg avatar-uploader profile-cover-avatar" for="avatarUploader">
+                                    <h:graphicImage style="width: 126px; height: 126px ; border-radius: 50%;" id="avatarImg" class="avatar-img" value="/imgprofile/#{dataUser.fotoPerfil}" alt="img-x"/>
+
+                                    <input type="file" class="js-file-attach avatar-uploader-input" id="avatarUploader"
+                                           data-hs-file-attach-options='{
+                                           "textTarget": "#avatarImg",
+                                           "mode": "image",
+                                           "targetAttr": "src",
+                                           "allowTypes": [".png", ".jpeg", ".jpg"]
+                                           }'/>
+
+                                    <span class="avatar-uploader-trigger">
+                                        <i class="tio-edit avatar-uploader-icon shadow-soft"></i>
+                                    </span>
+                                </label>
+                                <!-- End Avatar -->
+
+                                <h1 class="page-header-title">#{dataUser.nombre} #{dataUser.apellido}<c:if test="#{dataUser.rolIdrol.nombreRol.equals('Administrador')}"><i class="tio-verified tio-lg text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></c:if></h1>
+
+                                <!-- List -->
+                                <ul class="list-inline list-inline-m-1">
+                                    <li class="list-inline-item">
+                                        <c:if test="#{dataUser.rolIdrol.nombreRol.equals('Administrador')}">
+                                            <i class="tio-crown mr-1 text-warning"></i>
+                                        </c:if>
+                                        <c:if test="#{dataUser.rolIdrol.nombreRol.equals('Cliente')}">
+
+                                            <i class="tio-user mr-1 text-primary"></i>
+
+                                        </c:if>
+                                        <span>#{dataUser.rolIdrol.nombreRol}</span>
+                                    </li>
+
+                                    <li class="list-inline-item">
+                                        <i class="tio-poi-outlined mr-1"></i>
+                                        <a href="#">#{ventasSession.objDirPrincipal.nombreDireccion}</a>
+                                        <a href="#">- #{ventasSession.objDirPrincipal.barrio}</a>
+                                    </li>
+
+                                    <li class="list-inline-item">
+                                        <i class="tio-date-range mr-1"></i>
+                                        <span>Joined #{dataUser.fechaRegistro}</span>
+                                    </li>
+                                </ul>
+                                <!-- End List -->
+                            </div>
+                            <!-- End Profile Header -->
+
+                            <!-- Nav -->
+                            <div class="js-nav-scroller hs-nav-scroller-horizontal mb-5"
+                                 data-hs-nav-scroller-options='{
+                                 "type": "horizontal",
+                                 "delay": 20
+                                 }'>
+
+                                <span class="hs-nav-scroller-arrow-backward" style="display: none;">
+                                    <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                                        <i class="tio-chevron-left"></i>
+                                    </a>
+                                </span>
+
+                                <span class="hs-nav-scroller-arrow-forward" style="display: none;">
+                                    <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                                        <i class="tio-chevron-right"></i>
+                                    </a>
+                                </span>
+
+                                <ul class="nav nav-tabs align-items-center">
+                                    <li class="nav-item">
+                                        <a class="nav-link active disabled" href="#">Profile</a>
+                                    </li>
+
+                                    <li class="nav-item ml-auto">
+                                        <h:form>
+                                            <h:commandLink class="btn btn-sm btn-white mr-2" action="#{userSession.seleccionUsuarioAdmin(dataUser.idusuario)}">
+                                                <i class="tio-edit mr-1"></i> Edit profile
+                                            </h:commandLink>
+                                        </h:form>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Nav -->
+
+                            <div class="row">
+
+                                <c:if test="#{dataUser.rolIdrol.nombreRol.equals('Cliente')}">
+
+                                    <div class="col-lg-4">
+
+                                        <!-- Card -->
+                                        <div class="card mb-3 mb-lg-5">
+                                            <!-- Header -->
+                                            <div class="card-header">
+                                                <h2 class="card-header-title h5">Profile</h2>
+                                                <h:form>
+                                                    <h:commandLink class="btn btn-sm btn-white" action="#{userSession.seleccionUsuarioAdmin(dataUser.idusuario)}">
+                                                        Edit
+                                                    </h:commandLink>
+                                                </h:form>
+                                            </div>
+                                            <!-- End Header -->
+
+                                            <!-- Body -->
+                                            <div class="card-body">
+                                                <ul class="list-unstyled list-unstyled-py-3 text-dark mb-3">
+                                                    <li class="py-0">
+                                                        <small class="card-subtitle">About</small>
+                                                    </li>
+
+                                                    <li>
+                                                        <i class="tio-user-outlined nav-icon"></i>
+                                                        #{dataUser.nombre} #{dataUser.apellido}
+                                                    </li>
+                                                    <li>
+                                                        <i class="tio-briefcase-outlined nav-icon"></i>
+                                                        #{dataUser.rolIdrol.nombreRol}
+                                                    </li>
+                                                    <li>
+                                                        <c:if test="#{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado.equals('Activo')}">
+                                                            <i class="tio-circle nav-icon text-success"></i>
+                                                        </c:if>
+                                                        <c:if test="#{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado.equals('Suspendido')}">
+                                                            <i class="tio-circle nav-icon text-danger"></i>
+                                                        </c:if>
+                                                        #{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado}
+                                                    </li>
+
+                                                    <li class="pt-2 pb-0">
+                                                        <small class="card-subtitle">Contacts</small>
+                                                    </li>
+
+                                                    <li>
+                                                        <i class="tio-online nav-icon"></i>
+                                                        #{dataUser.email}
+                                                    </li>
+                                                    <li>
+                                                        <i class="tio-android-phone-vs nav-icon"></i>
+                                                        #{ventasSession.objTelPrincipal.numerotelefono}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- End Body -->
+                                        </div>
+                                        <!-- End Card -->
+
+                                    </div>
+
+                                </c:if>
+
+                                <c:if test="#{dataUser.rolIdrol.nombreRol.equals('Mesero')}">
+                                    <div class="col-lg-4">
+
+                                        <!-- Card -->
+                                        <div class="card mb-3 mb-lg-5">
+                                            <!-- Header -->
+                                            <div class="card-header">
+                                                <h2 class="card-header-title h5">Profile</h2>
+                                                <h:form>
+                                                    <h:commandLink class="btn btn-sm btn-white" action="#{userSession.seleccionUsuarioAdmin(dataUser.idusuario)}">
+                                                        Edit
+                                                    </h:commandLink>
+                                                </h:form>
+                                            </div>
+                                            <!-- End Header -->
+
+                                            <!-- Body -->
+                                            <div class="card-body">
+                                                <ul class="list-unstyled list-unstyled-py-3 text-dark mb-3">
+                                                    <li class="py-0">
+                                                        <small class="card-subtitle">About</small>
+                                                    </li>
+
+                                                    <li>
+                                                        <i class="tio-user-outlined nav-icon"></i>
+                                                        #{dataUser.nombre} #{dataUser.apellido}
+                                                    </li>
+                                                    <li>
+                                                        <i class="tio-briefcase-outlined nav-icon"></i>
+                                                        #{dataUser.rolIdrol.nombreRol}
+                                                    </li>
+                                                    <li>
+                                                        <c:if test="#{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado.equals('Activo')}">
+                                                            <i class="tio-circle nav-icon text-success"></i>
+                                                        </c:if>
+                                                        <c:if test="#{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado.equals('Suspendido')}">
+                                                            <i class="tio-circle nav-icon text-danger"></i>
+                                                        </c:if>
+                                                        #{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado}
+                                                    </li>
+
+                                                    <li class="pt-2 pb-0">
+                                                        <small class="card-subtitle">Contacts</small>
+                                                    </li>
+
+                                                    <li>
+                                                        <i class="tio-online nav-icon"></i>
+                                                        #{dataUser.email}
+                                                    </li>
+                                                    <li>
+                                                        <i class="tio-android-phone-vs nav-icon"></i>
+                                                        #{ventasSession.objTelPrincipal.numerotelefono}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- End Body -->
+                                        </div>
+                                        <!-- End Card -->
+
+                                    </div>
+                                </c:if>
+
+                                <c:if test="#{dataUser.rolIdrol.nombreRol.equals('Administrador')}">
+                                    <div class="col-lg-4">
+
+                                        <!-- Card -->
+                                        <div class="card mb-3 mb-lg-5">
+                                            <!-- Header -->
+                                            <div class="card-header">
+                                                <h2 class="card-header-title h5">Profile</h2>
+                                                <h:form>
+                                                    <h:commandLink class="btn btn-sm btn-white" action="#{userSession.seleccionUsuarioAdmin(dataUser.idusuario)}">
+                                                        Edit
+                                                    </h:commandLink>
+                                                </h:form>
+                                            </div>
+                                            <!-- End Header -->
+
+                                            <!-- Body -->
+                                            <div class="card-body">
+                                                <ul class="list-unstyled list-unstyled-py-3 text-dark mb-3">
+                                                    <li class="py-0">
+                                                        <small class="card-subtitle">About</small>
+                                                    </li>
+
+                                                    <li>
+                                                        <i class="tio-user-outlined nav-icon"></i>
+                                                        #{dataUser.nombre} #{dataUser.apellido}
+                                                    </li>
+                                                    <li>
+                                                        <i class="tio-briefcase-outlined nav-icon"></i>
+                                                        #{dataUser.rolIdrol.nombreRol}
+                                                    </li>
+                                                    <li>
+                                                        <c:if test="#{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado.equals('Activo')}">
+                                                            <i class="tio-circle nav-icon text-success"></i>
+                                                        </c:if>
+                                                        <c:if test="#{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado.equals('Suspendido')}">
+                                                            <i class="tio-circle nav-icon text-danger"></i>
+                                                        </c:if>
+                                                        #{dataUser.estadoUsuarioIdestadoUsuario.nombreEstado}
+                                                    </li>
+
+                                                    <li class="pt-2 pb-0">
+                                                        <small class="card-subtitle">Contacts</small>
+                                                    </li>
+
+                                                    <li>
+                                                        <i class="tio-online nav-icon"></i>
+                                                        #{dataUser.email}
+                                                    </li>
+                                                    <li>
+                                                        <i class="tio-android-phone-vs nav-icon"></i>
+                                                        #{ventasSession.objTelPrincipal.numerotelefono}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- End Body -->
+                                        </div>
+                                        <!-- End Card -->
+
+                                    </div>
+                                </c:if>
+
+
+
+
+                                <c:if test="#{dataUser.rolIdrol.nombreRol.equals('Cliente')}">
+                                    <div class="col-lg-8">
+                                        <!-- Card -->
+                                        <div class="card mb-3 mb-lg-5">
+                                            <!-- Header -->
+                                            <div class="card-header">
+                                                <div class="row justify-content-between align-items-center flex-grow-1">
+                                                    <div class="col-sm mb-3 mb-sm-0">
+                                                        <h4 class="card-header-title">User Orders</h4>
+                                                    </div>
+
+                                                    <div class="col-sm-auto">
+                                                        <!-- Nav -->
+                                                        <ul class="js-tabs-to-dropdown nav nav-segment nav-fill nav-sm-down-break"
+                                                            data-hs-transform-tabs-to-btn-options='{
+                                                            "transformResolution": "sm",
+                                                            "btnClassNames": "btn btn-block btn-white dropdown-toggle justify-content-center"
+                                                            }'>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" href="#">All orders</a>
+                                                            </li>
+                                                        </ul>
+                                                        <!-- End Nav -->
+
+                                                        <!-- Datatable Info -->
+                                                        <div id="datatableCounterInfo" style="display: none;">
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="font-size-sm mr-3">
+                                                                    <span id="datatableCounter">0</span>
+                                                                    Selected
+                                                                </span>
+                                                                <a class="btn btn-sm btn-outline-danger" href="javascript:;">
+                                                                    <i class="tio-delete-outlined"></i> Delete
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End Datatable Info -->
+                                                    </div>
+                                                </div>
+                                                <!-- End Row -->
+                                            </div>
+                                            <!-- End Header -->
+
+                                            <!-- Body -->
+                                            <div class="card-body">
+                                                <!-- Input Group -->
+                                                <div class="input-group input-group-merge">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="tio-search"></i>
+                                                        </span>
+                                                    </div>
+
+                                                    <input id="datatableSearch" type="search" class="form-control" placeholder="Search PQRS" aria-label="Search orders"/>
+                                                </div>
+                                                <!-- End Input Group -->
+                                            </div>
+                                            <!-- End Body -->
+
+                                            <!-- Table -->
+                                            <div class="table-responsive datatable-custom">
+                                                <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+                                                       data-hs-datatables-options='{
+                                                       "columnDefs": [{
+                                                       "targets": [0, 5],
+                                                       "orderable": false
+                                                       }],
+                                                       "order": [],
+                                                       "info": {
+                                                       "totalQty": "#datatableWithPaginationInfoTotalQty"
+                                                       },
+                                                       "search": "#datatableSearch",
+                                                       "entries": "#datatableEntries",
+                                                       "pageLength": 12,
+                                                       "isResponsive": false,
+                                                       "isShowPaging": false,
+                                                       "pagination": "datatablePagination"
+                                                       }'>
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col" class="table-column-pr-0">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input id="datatableCheckAll" type="checkbox" class="custom-control-input"/>
+                                                                    <label class="custom-control-label" for="datatableCheckAll"></label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="table-column-pl-0">Order</th>
+                                                            <th>Date</th>
+                                                            <th>Payment status</th>
+                                                            <th>Total</th>
+                                                            <th>Acciones</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <c:forEach items="#{userSession.listarOrdenesUsuario()}" var="userOrders">
+                                                            <tr>
+                                                                <td class="table-column-pr-0">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="ordersCheck1"/>
+                                                                        <label class="custom-control-label" for="ordersCheck1"></label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="table-column-pl-0">
+                                                                    <h:form>
+                                                                        <h:commandLink style="margin-left: 10px" action="#{ventasSession.seleccionarOrden(userOrders.idorden , userOrders.usuarioIdusuario.idusuario)}">#{userOrders.codigoOrden}</h:commandLink>
+                                                                    </h:form>
+                                                                </td>
+                                                                <td>#{userOrders.fecha}</td>
+                                                                <td>
+
+                                                                    <c:if test="#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Completada')}">
+                                                                        <span class="badge badge-soft-success">
+                                                                            <span class="legend-indicator bg-success"></span>#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden}
+                                                                        </span>    
+                                                                    </c:if>
+
+                                                                    <c:if test="#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                                                        <span class="badge badge-soft-danger">
+                                                                            <span class="legend-indicator bg-danger"></span>#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden}
+                                                                        </span>    
+                                                                    </c:if>
+                                                                    <c:if test="#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                                                        <span class="badge badge-soft-warning">
+                                                                            <span class="legend-indicator bg-warning"></span>#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden}
+                                                                        </span>    
+                                                                    </c:if>
+                                                                    
+                                                                    <c:if test="#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparada')}">
+                                                                        <span class="badge badge-soft-dark">
+                                                                            <span class="legend-indicator bg-dark"></span>#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden}
+                                                                        </span>    
+                                                                    </c:if>
+
+                                                                    <c:if test="#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                                                        <span class="badge badge-soft-primary">
+                                                                            <span class="legend-indicator bg-primary"></span>#{userOrders.estadoOrdenIdestadoOrden.nombreEstadoOrden}
+                                                                        </span>    
+                                                                    </c:if>
+
+                                                                </td>
+                                                                <td>#{userOrders.total}</td>
+                                                                <td>
+                                                                    <a class="btn btn-sm btn-white" href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal">
+                                                                        <i class="tio-receipt-outlined mr-1"></i> Invoice
+                                                                    </a>
+                                                                </td>
+
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary btn-icon"  href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal">
+                                                                        <i class="tio-receipt-outlined"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-primary btn-icon">
+                                                                        <i class="tio-delete"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- End Table -->
+
+                                            <!-- Footer -->
+                                            <div class="card-footer">
+                                                <!-- Pagination -->
+                                                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                                                    <div class="col-sm mb-2 mb-sm-0">
+                                                        <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                                                            <span class="mr-2">Showing:</span>
+
+                                                            <!-- Select -->
+                                                            <select id="datatableEntries" class="js-select2-custom"
+                                                                    data-hs-select2-options='{
+                                                                    "minimumResultsForSearch": "Infinity",
+                                                                    "customClass": "custom-select custom-select-sm custom-select-borderless",
+                                                                    "dropdownAutoWidth": true,
+                                                                    "width": true
+                                                                    }'>
+                                                                <option value="12" selected="true">12</option>
+                                                                <option value="14">14</option>
+                                                                <option value="16">16</option>
+                                                                <option value="18">18</option>
+                                                            </select>
+                                                            <!-- End Select -->
+
+                                                            <span class="text-secondary mr-2">of</span>
+
+                                                            <!-- Pagination Quantity -->
+                                                            <span id="datatableWithPaginationInfoTotalQty"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-auto">
+                                                        <div class="d-flex justify-content-center justify-content-sm-end">
+                                                            <!-- Pagination -->
+                                                            <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Pagination -->
+                                            </div>
+                                            <!-- End Footer -->
+                                        </div>
+                                        <!-- End Card -->
+                                    </div>
+                                </c:if>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Row -->
+                </div>
+                <!-- End Content -->
+
+            </c:forEach>
+
+
+
+            <!-- Footer -->
+
+            <div class="footer">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col">
+                        <p class="font-size-sm mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2020 Htmlstream.</span></p>
+                    </div>
+                    <div class="col-auto">
+                        <div class="d-flex justify-content-end">
+                            <!-- List Dot -->
+                            <ul class="list-inline list-separator">
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">FAQ</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">License</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <!-- Keyboard Shortcuts Toggle -->
+                                    <div class="hs-unfold">
+                                        <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle" href="javascript:;"
+                                           data-hs-unfold-options='{
+                                           "target": "#keyboardShortcutsSidebar",
+                                           "type": "css-animation",
+                                           "animationIn": "fadeInRight",
+                                           "animationOut": "fadeOutRight",
+                                           "hasOverlay": true,
+                                           "smartPositionOff": true
+                                           }'>
+                                            <i class="tio-command-key"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End Keyboard Shortcuts Toggle -->
+                                </li>
+                            </ul>
+                            <!-- End List Dot -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- End Footer -->
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+
+
+    </ui:composition>
+
+
+</html>
+

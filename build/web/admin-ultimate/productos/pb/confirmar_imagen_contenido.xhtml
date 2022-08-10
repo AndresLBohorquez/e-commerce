@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main">
+            <!-- Card -->
+            <div class="tab-content" id="navTabContent26">
+                <h1 style="margin: 100px 100px 0px 70px" class="display-4">Se ha seleccionado la siguiente imagen como principal para el producto #{productSession.objProducto.nombreProducto}</h1>
+                <div style="margin: 20px 250px 0px 220px" class="card">
+                    <h:graphicImage class="card-img card-img-top" value="/images/#{productSession.objImagen.ruta}" alt="Card image cap"/>
+                    <div class="card-img-overlay">
+                    </div>
+
+                </div>
+                <center>
+                    <h:form>
+                        <h:commandButton class="btn-primary" action="#{productSession.imagenPrincipal()}"
+                                         style="margin-top: 20px" value="Confirmar"/>
+                        <h:commandButton class="btn-danger" style="margin-left: 10px" value="Cancelar"/>
+                    </h:form>
+                </center>
+                <!-- End Card -->
+            </div>
+        </main>
+
+
+
+
+
+    </ui:composition>
+
+
+</html>
+

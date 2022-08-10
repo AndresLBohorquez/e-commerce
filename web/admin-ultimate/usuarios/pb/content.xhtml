@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main pointer-event" >
+
+            <!-- Card -->
+            <div class="container " style="display: flex; justify-content: center">
+                <div class="card mb-3 mb-lg-5 ml-3 mr-md-5 mt-5" >
+                    <div class="card-header">
+                        <h2 class="card-title h4">Formulario de Registro</h2>
+                    </div>
+
+
+
+
+                    <!-- Body -->
+                    <div class="card-body">
+                        <!-- Form -->
+                        <h:form>
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Nombre completo<i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="Ingrese su nombre completo"></i></label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group input-group-sm-down-break">
+                                        <h:inputText class="form-control" id="firstNameLabel" html5:placeholder="nombres"  value="#{registroRequest.nombre}"/>
+                                        <h:inputText class="form-control" id="lastNameLabel" html5:placeholder="apellidos"  value="#{registroRequest.apellido}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="emailLabel" class="col-sm-3 col-form-label input-label">Email</label>
+
+                                <div class="col-sm-9">
+                                    <h:inputText class="form-control"  id="emailLabel" html5:placeholder="Email" value="#{registroRequest.email}"/>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Teléfono <span class="input-label-secondary"></span></label>
+
+                                <div class="col-sm-9">
+                                    <h:inputText class="js-masked-input form-control"  id="phoneLabel" html5:placeholder="3024324151" value="#{registroRequest.telefono1}"/>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="organizationLabel" class="col-sm-3 col-form-label input-label">DNI</label>
+
+                                <div class="col-sm-9">
+                                    <h:inputText class="form-control" id="organizationLabel" html5:placeholder="ingrese el DNI" value="#{registroRequest.dni}"/>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="departmentLabel" class="col-sm-3 col-form-label input-label">Dirección</label>
+
+                                <div class="col-sm-9">
+                                    <h:inputText class="form-control"  id="departmentLabel" html5:placeholder="Your department" value="#{registroRequest.direccion}"/>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="zipCodeLabel" class="col-sm-3 col-form-label input-label">Barrio</label>
+
+                                <div class="col-sm-9">
+                                    <h:inputText  class="js-masked-input form-control" id="zipCodeLabel" html5:placeholder="ingrese el barrio" value="#{registroRequest.barrio}"/>
+                                </div>
+                            </div>
+
+                            <!-- Input Group -->
+                            <div class="form-group">
+                                <label for="inputGroupHoverLightGenderSelect" class="input-label">ROL</label>
+
+                                <div class="input-group input-group-merge input-group-hover-light">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="tio-user-outlined"></i>
+                                        </span>
+                                    </div>
+                                    <h:selectOneMenu class="custom-select" value="#{registroRequest.rol_idrol}">
+                                        <f:selectItems value="#{registroRequest.listRol}" var="rol" itemLabel="#{rol.nombreRol}" itemValue="#{rol.idrol}">
+                                        </f:selectItems>
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                            <!-- End Input Group -->
+
+                            <!-- End Form Group -->
+                            <div class="row form-group">
+                                <label for="currentPasswordLabel" class="col-sm-3 col-form-label input-label">Contraseña</label>
+
+                                <div class="col-sm-9">
+                                    <h:inputSecret class="form-control" id="currentPasswordLabel" html5:placeholder="Ingresar Contraseña" value="#{registroRequest.clave}"/>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <h:commandButton class="btn btn-primary" value="Registrar Usuario" action="${registroRequest.registrarUsuarioAdmin()}"/>
+                            </div>
+                        </h:form>
+                        <!-- End Form -->
+                    </div>
+                    <!-- End Body -->
+                </div>
+                <!-- End Card -->
+            </div>
+        </main>
+
+
+
+    </ui:composition>
+
+
+</html>
+

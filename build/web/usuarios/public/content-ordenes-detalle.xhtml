@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <!-- Page title-->
+        <!-- Page Content-->
+        <!-- Dashboard header-->
+        <div class="page-title-overlap bg-dark pt-4">
+            <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+                <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                            <li class="breadcrumb-item">
+                                <a class="text-nowrap" href="../../cliente-index.html"><i class="czi-home"></i>Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item text-nowrap"><a href="#">Cuenta</a></li>
+                            <li class="breadcrumb-item text-nowrap active" aria-current="page">Órdenes</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+                    <h1 class="h3 text-light mb-0">Mis Órdenes&nbsp;</h1>
+                </div>
+            </div>
+        </div>
+        <div class="container pb-5 mb-2 mb-md-3">
+            <div class="row">
+                <!-- Sidebar-->
+                <aside class="col-lg-4 pt-4 pt-lg-0">
+                    <div class="cz-sidebar-static rounded-lg box-shadow-lg px-0 pb-0 mb-5 mb-lg-0">
+                        <div class="px-4 mb-4">
+                            <div class="media align-items-center">
+                                <p:avatar styleClass="p-mr-2" size="xlarge" shape="circle">
+                                    <h:graphicImage value="/imgprofile/#{userSession.usuarioLogin.fotoPerfil}" />
+                                </p:avatar>
+                                <div class="media-body pl-3">
+                                    <h3 class="font-size-base mb-0">#{userSession.usuarioLogin.nombre} #{userSession.usuarioLogin.apellido}</h3>
+                                    <span class="text-accent font-size-sm">#{userSession.usuarioLogin.email}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-secondary px-4 py-3">
+                            <h3 class="font-size-sm mb-0 text-muted">Dashboard</h3>
+                        </div>
+                        <ul class="list-unstyled mb-0">
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="#{request.contextPath}/usuarios/client/perfil-ordenes.xhtml"><i class="czi-bag opacity-60 mr-2"></i>Órdenes<span class="font-size-sm text-muted ml-auto">#{ordenSession.listarOrdenPendientesUsuario().size()}</span></a>
+                            </li>
+                            <!--<li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-wishlist.html"><i class="czi-heart opacity-60 mr-2"></i>Wishlist<span class="font-size-sm text-muted ml-auto">3</span></a>
+                            </li>-->
+                            <li class="mb-0 border-bottom">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/servicio-al-cliente.xhtml"><i class="czi-help opacity-60 mr-2"></i>Servicio al cliente</a>
+                            </li>
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/perfil.xhtml"><i class="czi-user opacity-60 mr-2"></i>Perfil</a>
+                            </li>
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/direcciones.xhtml"><i class="czi-location opacity-60 mr-2"></i>Direcciones</a>
+                            </li>
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/telefonos.xhtml"><i class="czi-mobile opacity-60 mr-2"></i>Telefonos</a>
+                            </li>
+                            <!--<li class="mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-payment.html"><i class="czi-card opacity-60 mr-2"></i>Payment methods</a>
+                            </li>-->
+                            <li class="d-lg-none border-top mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/index.xhtml"><i class="czi-sign-out opacity-60 mr-2"></i>Salir</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </aside>
+
+                <!-- Content  -->
+
+                <section class="col-lg-8 ">
+                    <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
+                        <h4 class="h4 text-light mb-0">#{ventasSession.selectorOrdenUsuario.codigoOrden}</h4>
+                    </div>
+                    <div class="container w-100">
+                        <!-- Toolbar-->
+
+                        <div class="d-flex justify-content-lg-center">
+                            <h:form>
+                                <h:commandLink action="#{ventasSession.rastrearOrden()}" type="button" class=" btn btn-danger " >
+                                    Rastrear Orden
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+
+
+                        <c:forEach items="#{ventasSession.listarProductosCarritoUsuario()}" var="detallesOrden">
+                            <div  class="d-sm-flex justify-content-between my-4 pb-3 border-bottom mr-5">
+                                <div class="media media-ie-fix d-block d-sm-flex text-center text-sm-left">
+                                    <a class="d-inline-block mx-auto mr-sm-5" href="shop-single-v1.html" style="width: 7rem;">
+                                        <h:graphicImage class="img-fluid" value="/images/#{detallesOrden.productoIdproducto.imagenPrincipal}" alt="Image Description"/>
+                                    </a>
+                                    <div class="media-body pt-2">
+                                        <h3 class="product-title font-size-base mb-2"><a href="shop-single-v1.html">#{detallesOrden.productoIdproducto.nombreProducto}</a></h3>
+                                        <div class="font-size-sm"><span class="text-muted mr-2">Tamaño: </span>#{detallesOrden.productoIdproducto.tamanio}</div>
+                                        <div class="font-size-sm"><span class="text-muted mr-2">Categoría: </span>#{detallesOrden.productoIdproducto.categoriaIdcategoria.nombreCategoria}</div>
+                                        <div class="font-size-lg text-accent pt-2">$#{detallesOrden.precioUnit}</div>
+                                    </div>
+                                </div>
+                                <div class="pt-2 pt-sm-0 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-right" style="max-width: 9rem;">
+                                    <p class="mb-0"><span class="text-muted font-size-sm">Cantidad: </span><span>#{detallesOrden.cantidad}</span></p>
+                                    <p class="px-0"><span class="font-size-sm">Subtotal: #{detallesOrden.cantidad * detallesOrden.precioUnit}</span></p>
+                                </div>
+                            </div>
+                        </c:forEach>
+                        <div class="modal-footer flex-wrap justify-content-between bg-secondary font-size-md">
+                            <div class="px-2 py-1"><span class="text-muted">Subtotal:&nbsp;</span><span>$#{ventasSession.selectorOrdenUsuario.subtotal}</span></div>
+                            <div class="px-2 py-1"><span class="text-muted">Envío:&nbsp;</span><span>$#{ventasSession.selectorOrdenUsuario.valorEnvio}</span></div>
+                            <div class="px-2 py-1"><span class="text-muted">Total:&nbsp;</span><span class="font-size-lg">$#{ventasSession.selectorOrdenUsuario.total}</span></div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+            </div>
+        </div>
+
+    </ui:composition>
+
+
+</html>
+

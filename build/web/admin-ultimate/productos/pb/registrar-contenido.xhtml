@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main">
+
+            <h:form enctype="multipart/form-data">
+                <!-- Content -->
+                <div class="content container-fluid">
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb breadcrumb-no-gutter">
+                                        <li class="breadcrumb-item"><a class="breadcrumb-link" href="#{request.contextPath}/admin-ultimate/productos.xhtml">Productos</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Agregar Producto</li>
+                                    </ol>
+                                </nav>
+
+                                <h1 class="page-header-title">Agregar Producto</h1>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+                    </div>
+                    <!-- End Page Header -->
+
+                 
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!-- Card -->
+                            <div class="card mb-3 mb-lg-5">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Información del Prodcuto</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <!-- Form Group -->
+                                    <div class="form-group">
+                                        <label for="productNameLabel" class="input-label">Nombre <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="Nombre del Producto."></i></label>
+
+                                        <h:inputText class="form-control" id="productNameLabel" html5:placeholder="Coke, Steak, etc..." value="#{productSession.nombre_producto}"/>
+                                    </div>
+                                    <!-- End Form Group -->
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!-- Form Group -->
+                                            <div class="form-group">
+                                                <label for="SKULabel" class="input-label">Cantidad</label>
+
+                                                <h:inputText class="form-control" id="SKULabel" html5:placeholder="eg. 30" value="#{productSession.cantidad}"/>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <!-- Form Group -->
+                                            <div class="form-group">
+                                                <label for="weightLabel" class="input-label">Tamaño</label>
+                                                <h:inputText class="form-control form-control-hover-light" id="formControlHoverLightFullName" html5:placeholder="250ML" value="#{productSession.tamanio}"/>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        </div>
+                                    </div>
+                                    <!-- End Row -->
+
+                                    <label class="input-label">Descripción <span class="input-label-secondary">(Opcional)</span></label>
+
+                                    <!-- Quill -->
+                                    <div class="quill-custom">
+                                        <h:inputTextarea class="form-control" rows="7" value="#{productSession.descripcion}"></h:inputTextarea>
+                                    </div>
+                                    <!-- End Quill -->
+                                </div>
+                                <!-- Body -->
+                            </div>
+                            <!-- End Card -->
+
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <!-- Card -->
+                            <div class="card mb-3 mb-lg-5">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Precio</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <!-- Form Group -->
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+                                            <h:inputText class="form-control" id="priceNameLabel" value="#{productSession.precio_unitario}"/>
+                                        </div>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+                                <!-- Body -->
+                            </div>
+                            <!-- End Card -->
+
+                            <!-- Card -->
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Organización</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <!-- Form Group -->
+                                    <div class="form-group">
+                                        <label for="proveedorLabel" class="input-label">Proveedor</label>
+                                        <!-- Select -->
+                                        <h:selectOneMenu class="js-select2-custom custom-select" style="opacity: 0;" id="proveedorLabel" value="#{productSession.proveedor_idproveedor}">
+                                            <f:selectItems value="#{productSession.listaProveedores}" var="proveedoresLista" itemLabel="#{proveedoresLista.nombreProveedor}" itemValue="#{proveedoresLista.idproveedor}"></f:selectItems>
+                                        </h:selectOneMenu>
+                                        <!-- End Select -->
+                                    </div>
+                                    <!-- End Form Group -->
+
+                                    <!-- Form Group -->
+                                    <div class="form-group">
+                                        <label for="categoryLabel" class="input-label">Categoría</label>
+
+                                        <!-- Select -->
+                                        <h:selectOneMenu class="js-select2-custom custom-select" style="opacity: 0;" id="categoryLabel" value="#{productSession.categoria_idcategoria}">
+                                            <f:selectItems value="#{productSession.categoriasProductos}" var="listaCategorias" itemLabel="#{listaCategorias.nombreCategoria}" itemValue="#{listaCategorias.idcategoria}"></f:selectItems>
+                                        </h:selectOneMenu>
+                                        <!-- End Select -->
+                                    </div>
+                                    <!-- Form Group -->
+
+                                    <h:selectOneMenu class="js-select2-custom custom-select" style="opacity: 0;" id="listaDependencias" value="#{productSession.dependencia}">
+                                        <f:selectItem itemLabel="Parrilla" itemValue="Parrilla" ></f:selectItem>
+                                        <f:selectItem itemLabel="Cocina" itemValue="Cocina" ></f:selectItem>
+                                    </h:selectOneMenu>
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                    </div>
+                    <!-- End Row -->
+
+
+
+
+                    <!-- Card -->
+                    <div class="col-lg-8">
+                        <h:commandLink class="btn btn-primary" action="#{productSession.registrarProducto()}">
+                            <i class="tio-fastfood"> </i>
+                            Registrar Producto
+
+                        </h:commandLink>
+                    </div>
+
+
+                </div>
+                <!-- End Content -->
+
+            </h:form>
+
+            <!-- Footer -->
+
+            <div class="footer">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col">
+                        <p class="font-size-sm mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2020 La Esquina Llanera.</span></p>
+                    </div>
+                    <div class="col-auto">
+                        <div class="d-flex justify-content-end">
+                            <!-- List Dot -->
+                            <ul class="list-inline list-separator">
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">FAQ</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">License</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <!-- Keyboard Shortcuts Toggle -->
+                                    <div class="hs-unfold">
+                                        <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle" href="javascript:;"
+                                           data-hs-unfold-options='{
+                                           "target": "#keyboardShortcutsSidebar",
+                                           "type": "css-animation",
+                                           "animationIn": "fadeInRight",
+                                           "animationOut": "fadeOutRight",
+                                           "hasOverlay": true,
+                                           "smartPositionOff": true
+                                           }'>
+                                            <i class="tio-command-key"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End Keyboard Shortcuts Toggle -->
+                                </li>
+                            </ul>
+                            <!-- End List Dot -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- End Footer -->
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+
+
+
+
+    </ui:composition>
+
+
+</html>
+

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:composition>
+
+
+
+        <!-- Page title-->
+        <!-- Page Content-->
+        <!-- Page title-->
+        <section class="bg-darker bg-size-cover bg-position-center py-5" >
+            <div class="container py-md-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                        <li class="breadcrumb-item">
+                            <a class="text-nowrap" href="#{request.contextPath}/index.xhtml"><i class="czi-home"></i>Home</a>
+                        </li>
+
+                        <li class="breadcrumb-item text-nowrap active" aria-current="page">Menu</li>
+                    </ol>
+                </nav>
+                <h1 class="text-light text-center text-lg-left py-3">Menu</h1>
+            </div>
+        </section>
+        <!-- Page navigation-->
+        <h:form>
+            <nav class="container mt-n5">
+                <div class="media align-items-center bg-white rounded-lg box-shadow-lg py-2 pl-sm-2 pr-4 pr-lg-2">
+                    <img class="d-block rounded-lg mr-lg-3" width="150" src="#{request.contextPath}/assets/front_end/components/Artboard-1.png" alt="Brand" />
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu
+                    </button>
+                    <div class="media-body text-right">
+                        <!-- Dropdown example 3 -->
+                        <div class="dropdown-menu">
+
+                            <c:forEach items="#{productoView.categoriasProductos}" var="cate">
+
+                                <h:commandLink action="#{productoView.seleccionCategorias(cate.idcategoria)}">
+
+                                    <c:if test="#{cate.nombreCategoria.equals('Platos')}">
+
+                                        <div class="dropdown-item">
+                                            <i class="czi-ham-leg mr-2"></i>
+                                            #{cate.nombreCategoria}
+                                        </div>
+
+                                    </c:if>
+
+                                    <c:if test="#{cate.nombreCategoria.equals('Bebidas')}">
+
+                                        <div class="dropdown-item">
+                                            <i class="czi-juice mr-2"></i>
+                                            #{cate.nombreCategoria}
+                                        </div>
+
+                                    </c:if>
+
+                                    <c:if test="#{cate.nombreCategoria.equals('Complementos')}">
+
+                                        <div class="dropdown-item">
+                                            <i class="czi-ice-cream mr-2"></i>
+                                            #{cate.nombreCategoria}
+                                        </div>
+
+                                    </c:if>
+
+
+
+                                </h:commandLink>
+
+
+
+                            </c:forEach>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </nav>
+        </h:form>
+        <!-- Menu (Products grid)-->
+        <section class="container tab-content py-4 py-sm-5">
+
+            <c:if test="#{productoView.objCategoria.nombreCategoria.equals('Platos')}">
+                <h2 class="text-center pt-2 pt-sm-0 mb-sm-5">Platos</h2>
+            </c:if>
+            <c:if test="#{productoView.objCategoria.nombreCategoria.equals('Bebidas')}">
+                <h2 class="text-center pt-2 pt-sm-0 mb-sm-5">Bebidas</h2>
+            </c:if>
+            <c:if test="#{productoView.objCategoria.nombreCategoria.equals('Complementos')}">
+                <h2 class="text-center pt-2 pt-sm-0 mb-sm-5">Complementos</h2>
+            </c:if>
+
+            <div class="row pt-3 pt-sm-0">
+                <c:forEach items="#{productoView.listaPorCategoria()}" var="productos">
+
+                    <!-- Item-->
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter">
+                        <div class="card product-card border pb-2">
+                            <!-- Product-->
+
+                            <div>
+                                <h:form>
+                                    <div class="card product-card card-static pb-3">
+                                        <c:if test="#{productos.cantidad &gt; 0}">
+                                            <span class="badge badge-danger badge-shadow">Disponible</span>
+                                        </c:if>
+                                        <c:if test="#{productos.cantidad &lt; 1}">
+                                            <span class="badge badge-dark badge-shadow">Agotado</span>
+                                        </c:if>
+
+
+                                        <!--<button class="btn-wishlist btn-sm" type="button" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i class="czi-heart"></i></button>-->
+                                        <a class="card-img-top d-block overflow-hidden">
+                                            <h:graphicImage style="width: 224px; height: 160px;" value="/images/#{productos.imagenPrincipal}" alt="img-x"/></a>
+                                        <div class="card-body py-2"><a class="product-meta d-block font-size-xs pb-1" href="#"></a>
+                                            <h3 class="product-title font-size-sm"><a href="grocery-single.html">#{productos.nombreProducto}</a></h3>
+                                            <p class="font-size-ms text-muted">#{productos.tamanio}</p>
+                                            <div class="product-price"><span class="text-accent">$#{productos.precioUnitario}</span>
+                                                <del  class="font-size-sm text-muted">$#{productos.precioUnitario}</del>
+                                            </div>
+                                        </div>
+                                        <div class="product-floating-btn">
+                                            <c:if test="#{userSession.usuarioLogin.idusuario != null }">
+                                                <c:if test="#{productos.cantidad &gt; 0}">
+                                                    <h:commandLink action="#{productSession.agregarProductos(productos.idproducto, 1, productos.nombreProducto, productos.precioUnitario, productos.imagenPrincipal, productos.tamanio, productos.cantidad)}" class="btn btn-primary btn-sm" type="button" html5:data-toggle="toast"
+                                                                   html5:data-target="#cart-toast">
+                                                        +<i class="czi-cart font-size-base ml-1"></i>
+                                                    </h:commandLink>
+                                                </c:if>
+                                                <c:if test="#{productos.cantidad &lt; 1}">
+                                                    <a class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Producto Agotado">
+                                                        +<i class="czi-cart font-size-base ml-1"></i>
+                                                    </a>
+                                                </c:if>
+                                            </c:if>
+
+                                            <c:if test="#{userSession.usuarioLogin.idusuario == null }">
+                                                <a href="#{request.contextPath}/pb/login.xhtml" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Debes iniciar sesión">
+                                                    +<i class="czi-cart font-size-base ml-1"></i>
+                                                </a>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
+
+                            <!-- Product-->
+
+                        </div>
+                    </div>
+                </c:forEach>
+
+
+            </div>
+            <!-- Load more button-->
+            <nav class="d-md-flex justify-content-between align-items-center text-center text-md-left pt-2 pb-4 mb-md-2"
+                 aria-label="Page navigation">
+                <div class="d-md-flex align-items-center w-100">
+                    <span class="font-size-sm text-muted mr-md-3">Showing 8 of 24 items</span>
+                    <div class="progress w-100 my-3 mx-auto mx-md-0" style="max-width: 10rem; height: 4px;">
+                        <div class="progress-bar bg-dark" role="progressbar" style="width: 18%;" aria-valuenow="18"
+                             aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-secondary" type="button">Load more items</button>
+            </nav>
+
+        </section>
+
+        <!-- Toast: Added to Cart-->
+        <div class="toast-container toast-bottom-center">
+            <div class="toast mb-3" id="cart-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-success text-white">
+                    <i class="czi-check-circle mr-2"></i>
+                    <h6 class="font-size-sm text-white mb-0 mr-auto">Añadido al Carrito</h6>
+                    <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span
+                            aria-hidden="true"></span></button>
+                </div>
+                <div class="toast-body">Este item ha sido añadido al carrito</div>
+            </div>
+        </div>
+
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,355 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main">
+            <h:form>
+                <!-- Content -->
+                <div class="content container-fluid">
+                    <!-- Page Header -->
+                    <div class="page-header d-print-none">
+                        <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb breadcrumb-no-gutter">
+                                        <li class="breadcrumb-item"><a class="breadcrumb-link" >Mesero</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Agregar Productos</li>
+                                    </ol>
+                                </nav>
+
+                                <div class="d-sm-flex align-items-sm-center">
+                                    <h1 class="page-header-title">#{meseroSession.selectorMesa.nombreMesa}</h1>
+
+                                    <span class="ml-2 ml-sm-3">
+                                        <i class="tio-date-range"></i> #{meseroSession.fechaHoy}
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-sm-auto">
+                                <a class="btn btn-icon btn-sm btn-ghost-secondary rounded-circle mr-1" href="#{request.contextPath}/admin-ultimate/mesero/content-mesero.xhtml" data-toggle="tooltip" data-placement="top" title="Atrás">
+                                    <i class="tio-arrow-backward"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+
+                    <div class="row">
+                        <div class="col-lg-8 mb-3 mb-lg-0">
+                            <!-- Card -->
+                            <div class="card mb-3 mb-lg-5">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <!-- Dropdown -->
+                                    <div class="dropdown">
+                                        <a class="btn btn-primary dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Categorías
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <c:forEach items="#{productoView.categoriasProductos}" var="cate">
+                                                <h:commandLink action="#{ventasSession.seleccionCategoria(cate.idcategoria)}">
+                                                    <div class="dropdown-item" >#{cate.nombreCategoria}</div>
+                                                </h:commandLink>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                    <!-- End Dropdown -->
+                                    <c:if test="#{ventasSession.objCategoria.nombreCategoria.equals('Platos')}">
+                                        <a class="link btn text-primary " data-toggle="modal" data-target="#agregarProducto">Platos</a>
+                                    </c:if>
+                                    <c:if test="#{ventasSession.objCategoria.nombreCategoria.equals('Complementos')}">
+                                        <a class="link btn text-primary " data-toggle="modal" data-target="#agregarProducto">Complementos</a>
+                                    </c:if>
+                                    <c:if test="#{ventasSession.objCategoria.nombreCategoria.equals('Bebidas')}">
+                                        <a class="link btn text-primary " data-toggle="modal" data-target="#agregarProducto">Bebidas</a>
+                                    </c:if>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+
+                                    <c:forEach items="#{ventasSession.listarporCategoria()}" var="productos">
+                                        <div class="media">
+                                            <div class="avatar avatar-xl mr-2">
+                                                <h:graphicImage class="img-fluid" value="/images/#{productos.imagenPrincipal}" alt="Image Description"/>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3 mb-md-0">
+                                                        <a class="h5 d-block" >#{productos.nombreProducto}</a>
+
+                                                        <c:if test="#{productos.cantidad != 0}">
+                                                            <div class="font-size-sm text-body">
+                                                                <span>Tamaño:</span>
+                                                                <span class="font-weight-bold">#{productos.tamanio}</span>
+                                                            </div>
+                                                        </c:if>
+                                                        <c:if test="#{productos.cantidad == 0}">
+                                                            <div class="font-size-sm text-danger">
+                                                                <span>Producto Agotado</span>
+
+                                                            </div>
+                                                        </c:if>
+                                                    </div>
+
+                                                    <div class="col col-md-3 align-self-center">
+                                                        <h5>$#{productos.precioUnitario}</h5>
+                                                    </div>
+                                                    <c:if test="#{productos.cantidad != 0}">
+                                                        <div class="col col-md-3  align-self-center position-static px-xl-5" >
+                                                            <h:commandLink action="#{ventasSession.agregarProductosCarritoMesero(productos.idproducto, 1, productos.nombreProducto, productos.precioUnitario, productos.imagenPrincipal, productos.tamanio, productos.cantidad)}" >
+                                                                <i class="tio-shopping-cart-add"></i>
+                                                            </h:commandLink>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="#{productos.cantidad == 0}">
+                                                        <div class="col col-md-3  align-self-center position-static px-xl-5" >
+                                                            <i class="tio-shopping-cart-add"></i>
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </c:forEach>
+
+                                    <!-- Media -->
+
+                                    <!-- End Media -->
+
+
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+
+                            <!-- Card -->
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">
+                                        Productos a Agregar
+                                    </h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <c:forEach items="#{ventasSession.mostrarCarritoMesero()}" var="carrito">
+                                        <div class="media">
+                                            <div class="avatar avatar-xl mr-2">
+                                                <h:graphicImage class="img-fluid" value="/images/#{carrito.imagen}" alt="Image Description"/>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="row">
+                                                    <div class="col-md-3 mb-3 mb-md-0">
+                                                        <a class="h5 d-block" >#{carrito.nombre}</a>
+                                                        <div class="font-size-sm text-body">
+                                                            <span>Tamaño:</span>
+                                                            <span class="font-weight-bold">#{carrito.tamanio}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col col-md-3 align-self-center">
+                                                        <h5>$#{carrito.precio}</h5>
+                                                    </div>
+
+                                                    <div class="col col-md-3 align-self-center">
+                                                        <p:growl id="growl" showDetail="true"/>
+                                                        <h:panelGrid  columns="" >
+                                                            <p:spinner style="color: white" id="spinner1"  value="#{carrito.cantidad}" min="1" max="#{carrito.cantidadTotal}" stepFactor="1">
+                                                                <p:ajax process="@this" update="growl"/>
+                                                            </p:spinner>
+                                                        </h:panelGrid>
+                                                        <h:commandLink action="#{ventasSession.borrarProductoCarritoMesero(carrito)}" class="btn btn-link px-0 text-danger" type="button"><i class="tio-clear-circle-outlined mr-2"></i><span class="font-size-sm">Borrar</span></h:commandLink>
+                                                    </div>
+                                                    <div class="col col-md-3 align-self-center">
+                                                        <h5>$#{carrito.precio * carrito.cantidad}</h5>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                    <hr></hr>
+
+
+                                    <div class="row justify-content-md-end mb-3">
+                                        <div class="col-md-8 col-lg-7">
+                                            <dl class="row text-sm-right">
+                                                <dt class="col-sm-6">Subtotal:</dt>
+                                                <dd class="col-sm-6">$#{ventasSession.subTotal}</dd>
+                                            </dl>
+                                            <!-- End Row -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+                        </div>
+
+                        <div class="col-lg-4">
+                            <!-- Card -->
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Mesa</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <a class="media align-items-center" >
+                                        <div class="icon icon-soft-info icon-circle mr-3">
+                                            <i class="tio-dining-table-outlined"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary">#{meseroSession.selectorMesa.nombreMesa}</span>
+                                        </div>
+
+                                    </a>
+
+                                    <hr></hr>
+
+                                    <a class="media align-items-center" >
+                                        <div class="icon icon-soft-info icon-circle mr-3">
+                                            <i class="tio-shopping-basket-outlined"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary">${meseroSession.listarOrdenesMesa().size()} Órdenes</span>
+                                        </div>
+
+                                    </a>
+
+                                    <hr></hr>
+
+
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+                            <div>
+                                <!-- Card -->
+                                <div>
+                                    <!-- Header -->
+
+                                    <c:if test="#{meseroSession.selectorMesa.estadoMesa.equals('disponible')}">
+                                        <div class="card-body" style="justify-content: center ">
+                                            <h:commandLink type="button" class="w-100 card-header-title btn btn-outline-success" action="#{ventasSession.crearOrden()}">
+                                                Crear Orden
+                                            </h:commandLink>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{meseroSession.selectorMesa.estadoMesa.equals('ocupada')}">
+                                        <div class="card-body" style="justify-content: center ">
+                                            <h:commandLink type="button" class="w-100 card-header-title btn btn-outline-success" action="#{ventasSession.agregarProductosMesero()}">
+                                                Agregar Productos
+                                            </h:commandLink>
+                                        </div>
+                                    </c:if>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Row -->
+                </div>
+                <!-- End Content -->
+
+                <!-- Footer -->
+                <div class="d-print-none">
+
+                    <div class="footer">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col">
+                                <p class="font-size-sm mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2020 Htmlstream.</span></p>
+                            </div>
+                            <div class="col-auto">
+                                <div class="d-flex justify-content-end">
+                                    <!-- List Dot -->
+                                    <ul class="list-inline list-separator">
+                                        <li class="list-inline-item">
+                                            <a class="list-separator-link" href="#">FAQ</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <a class="list-separator-link" href="#">License</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <!-- Keyboard Shortcuts Toggle -->
+                                            <div class="hs-unfold">
+                                                <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle" href="javascript:;"
+                                                   data-hs-unfold-options='{
+                                                   "target": "#keyboardShortcutsSidebar",
+                                                   "type": "css-animation",
+                                                   "animationIn": "fadeInRight",
+                                                   "animationOut": "fadeOutRight",
+                                                   "hasOverlay": true,
+                                                   "smartPositionOff": true
+                                                   }'>
+                                                    <i class="tio-command-key"></i>
+                                                </a>
+                                            </div>
+                                            <!-- End Keyboard Shortcuts Toggle -->
+                                        </li>
+                                    </ul>
+                                    <!-- End List Dot -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- End Footer -->
+
+                <!-- Modal -->
+                <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Confirmar Pago</h5>
+                                <button type="button" class="btn btn-xs btn-icon btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                                    <i class="tio-clear tio-lg"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Al aceptar se realizará el pago y se completará la orden.</p>
+                                <h4 class="text-success">$#{ventasSession.orden.total}</h4>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                <h:commandButton action="#{ventasSession.completarOrden()}" class="btn btn-danger" value="Continuar"></h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </h:form>
+        </main>
+
+    </ui:composition>
+
+
+</html>
+

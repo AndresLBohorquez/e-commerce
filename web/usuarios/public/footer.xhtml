@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+        <ui:composition>
+
+                <footer class="bg-dark pt-5">
+                    <div class="container">
+                        <div class="row pb-2">
+                            <div class="col-md-4 col-sm-6">
+                                <div class="widget widget-links widget-light pb-2 mb-4">
+                                    <h3 class="widget-title text-light">Menu</h3>
+                                    <ul class="widget-list">
+                                        <li class="widget-list-item">
+                                            <a href="#{request.contextPath}/usuarios/client/platos.xhtml" class="widget-list-link">Dishes</a>
+                                        </li>
+                                        <li class="widget-list-item">
+                                            <a href="#{request.contextPath}/usuarios/client/platos.xhtml" class="widget-list-link">Drinks</a>
+                                        </li>
+                                        <li class="widget-list-item">
+                                            <a href="#{request.contextPath}/usuarios/client/platos.xhtml" class="widget-list-link">Complements</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="widget widget-links widget-light pb-2 mb-4">
+                                    <h3 class="widget-title text-light">Dashboard&nbsp;</h3>
+                                    <ul class="widget-list">
+                                        <li class="widget-list-item">
+                                            <a href="#{request.contextPath}/usuarios/client/perfil.xhtml" class="widget-list-link">Profile</a>
+                                        </li>
+                                        <li class="widget-list-item">
+                                            <a href="#{request.contextPath}/usuarios/client/perfil-ordenes.xhtml" class="widget-list-link">Orders</a>
+                                        </li>
+
+
+                                        <li class="widget-list-item">
+                                            <a href="#{request.contextPath}/usuarios/client/servicio-al-cliente.xhtml" class="widget-list-link">Customer Service</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="widget pb-2 mb-4">
+                                    <h3 class="widget-title text-light pb-1">Stay Informed</h3>
+                                    <form class="input-group input-group-overlay flex-nowrap">
+                                        <div class="input-group-prepend-overlay">
+                                            <span class="input-group-text text-muted font-size-base">
+                                                <i class="czi-mail"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control prepended-form-control" type="email" placeholder="Your email"/>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Subscribe*</button>
+                                        </div>
+                                    </form>
+                                    <small class="form-text text-light opacity-50">*Subscribe to our newsletter to receive early discount offers, updates and new products info.*</small>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-5 bg-darker">
+                        <div class="container">
+                            <div class="row pb-3">
+                                <div class="col-md-3 col-sm-6 mb-4">
+                                    <div class="media">
+                                        <i class="czi-rocket text-primary" style="font-size: 2.25rem;"></i>
+                                        <div class="media-body pl-3">
+                                            <h6 class="font-size-base text-light mb-1">Fast and Free Deliveries</h6>
+                                            <p class="mb-0 font-size-ms text-light opacity-50">Free Deliveries for all orders over $33.300 COP</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-6 mb-4">
+                                    <div class="media">
+                                        <i class="czi-support text-primary" style="font-size: 2.25rem;"></i>
+                                        <div class="media-body pl-3">
+                                            <h6 class="font-size-base text-light mb-1">24/7 Customer Service</h6>
+                                            <p class="mb-0 font-size-ms text-light opacity-50">Friendly Support</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 mb-4">
+                                    <div class="media">
+                                        <i class="czi-money-bag text-primary" style="font-size: 2.25rem;"></i>
+                                        <div class="media-body pl-3">
+                                            <h6 class="font-size-base text-light mb-1">Upon Delivery</h6>
+                                            <p class="mb-0 font-size-ms text-light opacity-50">Receive your delivery at the door of your home</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="hr-light pb-4 mb-3"/>
+                            <div class="row pb-2">
+                                <div class="col-md-6 text-center text-md-left mb-4">
+                                    <div class="text-nowrap mb-4">
+                                        <a class="d-inline-block align-middle mt-n1 mr-3" href="#{request.contextPath}/index.xhtml">
+                                            <img class="d-block" width="117" src="#{request.contextPath}/assets/front_end/components/logo-01011-white.png" alt="logo-esquina-llanera"/>
+                                        </a>
+                                        <div class="btn-group dropdown disable-autohide">
+
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-item">
+                                                    <select class="custom-select custom-select-sm">
+                                                        <option value="usd">$ USD</option>
+                                                        <option value="eur">€ EUR</option>
+                                                        <option value="ukp">£ UKP</option>
+                                                        <option value="jpy">¥ JPY</option>
+                                                    </select>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item pb-1" href="#">
+                                                        <img class="mr-2" width="20" src="path-to-image" alt="Français"/>
+                                                        Français
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item pb-1" href="#">
+                                                        <img class="mr-2" width="20" src="path-to-image" alt="Deutsch"/>
+                                                        Deutsch
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <img class="mr-2" width="20" src="path-to-image" alt="Italiano"/>
+                                                        Italiano
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="widget widget-links widget-light">
+                                        <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
+
+
+                                            <li class="widget-list-item mr-4">
+                                                <a href="#{request.contextPath}/usuarios/client/servicio-al-cliente.xhtml" class="widget-list-link">Customer Service</a>
+                                            </li>
+                                            <li class="widget-list-item mr-4">
+                                                <a href="#{request.contextPath}/usuarios/client/servicio-al-cliente.xhtml" class="widget-list-link">Privacy</a>
+                                            </li>
+                                            <li class=" widget-list-itemmr-4">
+                                                <a href="#{request.contextPath}/usuarios/client/servicio-al-cliente.xhtml" class="widget-list-link">Terms</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-center text-md-right mb-4">
+                                    <div class="mb-3">
+                                        <a class="social-btn sb-light sb-twitter ml-2 mb-2" href="#"><i class="czi-twitter"></i></a>
+                                        <a class="social-btn sb-light sb-facebook ml-2 mb-2" href="#"><i class="czi-facebook"></i></a>
+                                        <a class="social-btn sb-light sb-instagram ml-2 mb-2" href="#"><i class="czi-instagram"></i></a>
+                                        <a class="social-btn sb-light sb-pinterest ml-2 mb-2" href="#"><i class="czi-pinterest"></i></a>
+                                        <a class="social-btn sb-light sb-youtube ml-2 mb-2" href="#"><i class="czi-youtube"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pb-4 font-size-xs text-light opacity-50 text-center text-md-left">© Hecho con amor por <a class="text-light" href="#">GAES 8</a></div>
+                        </div>
+                    </div>
+                </footer>
+
+        </ui:composition>
+
+</html>

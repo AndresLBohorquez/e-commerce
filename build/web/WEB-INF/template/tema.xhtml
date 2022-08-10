@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <title>La Esquina Llanera | Restaurante
+        </title>
+        <!-- SEO Meta Tags-->
+        <meta name="description" content="La Esquina Llanera - Restaurante"/>
+        <meta name="keywords"
+              content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean"/>
+        <meta name="author" content="La Esquina Llanera"/>
+        <!-- Viewport-->
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- Favicon and Touch Icons-->
+        <link rel="apple-touch-icon" sizes="180x180" href="#{request.contextPath}/assets/front_end/img/logo_1.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="#{request.contextPath}/assets/front_end/img/logo_1.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="#{request.contextPath}/assets/front_end/img/logo_1.png"/>
+        <link rel="manifest" href="site.webmanifest"/>
+        <link rel="mask-icon" color="#fe6a6a" href="#{request.contextPath}/assets/front_end/img/logo_1.png"/>
+        <meta name="msapplication-TileColor" content="#ffffff"/>
+        <meta name="theme-color" content="#ffffff"/>
+        <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+        <link rel="stylesheet" media="screen" href="#{request.contextPath}/assets/front_end/vendor/simplebar/dist/simplebar.min.css" />
+        <link rel="stylesheet" media="screen" href="#{request.contextPath}/assets/front_end/vendor/tiny-slider/dist/tiny-slider.css" />
+        <!-- Main Theme Styles + Bootstrap-->
+        <link rel="stylesheet" media="screen" href="#{request.contextPath}/assets/front_end/css/theme.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;500;900&amp;display=swap" rel="stylesheet"/>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <style>
+            .ui-button{
+                background: #fe696a !important;
+                border: 1px solid #fe696a !important;
+            }            
+            
+            .ui-button:hover{
+                color: #f7dada !important;
+            }
+
+            body .ui-inputfield.ui-state-hover{
+                border-color: #fe696a !important;
+            }
+            body .ui-inputfield.ui-state-focus{
+                border-color: #fe696a !important;
+                outline: 0 none;
+                box-shadow: 0px 0px 0.3em ; color: #fe696a;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+
+        <section id="container">
+
+            <ui:insert name="top">
+                <ui:include src="header.xhtml"></ui:include>
+            </ui:insert>
+
+            <ui:insert name="content">
+                <ui:include src="content.xhtml"></ui:include>
+            </ui:insert>
+
+            <ui:insert name="bottom">
+                <ui:include src="footer.xhtml"></ui:include>
+            </ui:insert>
+
+        </section>
+
+        <script src="#{request.contextPath}/assets/front_end/vendor/jquery/dist/jquery.slim.min.js"></script>
+        <script src="#{request.contextPath}/assets/front_end/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="#{request.contextPath}/assets/front_end/vendor/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+        <script src="#{request.contextPath}/assets/front_end/vendor/simplebar/dist/simplebar.min.js"></script>
+        <script src="#{request.contextPath}/assets/front_end/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+        <script src="#{request.contextPath}/assets/front_end/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+        <!-- Main theme script-->
+        <script src="#{request.contextPath}/assets/front_end/js/theme.min.js"></script>
+
+
+
+
+
+    </h:body>
+
+</html>

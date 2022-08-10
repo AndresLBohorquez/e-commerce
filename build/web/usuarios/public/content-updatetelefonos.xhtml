@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <!-- Page Content-->
+        <div class="container pb-5 mb-2 mb-md-3">
+            <div class="row">
+                <!-- Sidebar-->
+                <aside class="col-lg-4 pt-4 pt-lg-0">
+                    <div class="cz-sidebar-static rounded-lg box-shadow-lg px-0 pb-0 mb-5 mb-lg-0">
+                        <div class="px-4 mb-4">
+                            <div class="media align-items-center">
+                                <p:avatar styleClass="p-mr-2" size="xlarge" shape="circle">
+                                    <h:graphicImage value="/imgprofile/#{userSession.usuarioLogin.fotoPerfil}" />
+                                </p:avatar>
+                                <div class="media-body pl-3">
+                                    <h3 class="font-size-base mb-0">#{userSession.usuarioLogin.nombre} #{userSession.usuarioLogin.apellido}</h3>
+                                    <span class="text-accent font-size-sm">#{userSession.usuarioLogin.email}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-secondary px-4 py-3">
+                            <h3 class="font-size-sm mb-0 text-muted">Dashboard</h3>
+                        </div>
+                        <ul class="list-unstyled mb-0">
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/perfil-ordenes.xhtml"><i class="czi-bag opacity-60 mr-2"></i>Órdenes<span class="font-size-sm text-muted ml-auto">#{ordenSession.listarOrdenPendientesUsuario().size()}</span></a>
+                            </li>
+                            <!--<li class="border-bottom mb-0">
+                               <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-wishlist.html"><i class="czi-heart opacity-60 mr-2"></i>Wishlist<span class="font-size-sm text-muted ml-auto">3</span></a>
+                               </li>-->
+                            <li class="mb-0 border-bottom">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/servicio-al-cliente.xhtml"><i class="czi-help opacity-60 mr-2"></i>Servicio al cliente</a>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled mb-0">
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/perfil.xhtml"><i class="czi-user opacity-60 mr-2"></i>Perfil</a>
+                            </li>
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/usuarios/client/direcciones.xhtml"><i class="czi-location opacity-60 mr-2"></i>Direcciones</a>
+                            </li>
+                            <li class="border-bottom mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="#{request.contextPath}/usuarios/client/telefonos.xhtml"><i class="czi-mobile opacity-60 mr-2"></i>Telefonos</a>
+                            </li>
+                            <!--<li class="mb-0">
+                               <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-payment.html"><i class="czi-card opacity-60 mr-2"></i>Payment methods</a>
+                               </li>-->
+                            <li class="d-lg-none border-top mb-0">
+                                <a class="nav-link-style d-flex align-items-center px-4 py-3" href="#{request.contextPath}/index.xhtml"><i class="czi-sign-out opacity-60 mr-2"></i>Salir</a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+                <!-- Content  -->
+                <section class="col-lg-8">
+                    <!-- Toolbar-->
+                    <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-4">
+                        <h6 class="font-size-base text-dark mb-0" >Actualizar Teléfono</h6>
+                        <a class="btn btn-primary btn-sm" href="../../index.html"><i class="czi-sign-out mr-2"></i>Salir</a>
+                    </div>
+                    <!-- Floating label: Text input -->
+                    <div class="container pb-5 mb-2 mb-md-3">
+                        <h:form>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono</label>
+                                        <h:inputText value="#{userSession.telefono1}" class="form-control" html5:placeholder="#{userSession.telObj.numerotelefono}"/>
+                                        <div class="invalid-feedback">Por favor ingresa tu teléfono!</div>
+                                    </div>
+                                    <c:if test="#{userSession.telObj.tipoTelefono.equals('normal')}">
+                                        <div class="form-group">
+                                            <label for="telefono">Hacer este teléfono principal</label>
+                                            <p:selectBooleanButton value="#{userSession.check}" onLabel="Yes" offLabel="No" style="width:4rem ; margin-left: 15px ; color: white"/>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+
+                            <hr class="pb-4"></hr>
+                            <div class="text-sm-right"><h:commandLink action="#{userSession.actualizarTelefono()}" class="btn btn-primary" >Actualizar</h:commandLink></div>
+                        </h:form>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+
+
+    </ui:composition>
+
+
+</html>
+

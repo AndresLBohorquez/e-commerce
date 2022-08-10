@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main">
+            <h:form>
+                <!-- Content -->
+                <div class="content container-fluid">
+                    <!-- Page Header -->
+                    <div class="page-header d-print-none">
+                        <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb breadcrumb-no-gutter">
+                                        <li class="breadcrumb-item"><a class="breadcrumb-link" >Mesero</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">#{meseroSession.ordenMesa.codigoOrden}</li>
+                                    </ol>
+                                </nav>
+
+                                <div class="d-sm-flex align-items-sm-center">
+                                    <h1 class="page-header-title">#{meseroSession.selectorMesa.nombreMesa}</h1>
+                                    <span class="ml-2 ml-sm-3">
+                                        <i class="tio-date-range"></i> #{meseroSession.fechaHoy}
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-sm-auto">
+                                <a class="btn btn-icon btn-sm btn-ghost-secondary rounded-circle mr-1" href="#{request.contextPath}/admin-ultimate/mesero/content-mesero.xhtml" data-toggle="tooltip" data-placement="top" title="Atrás">
+                                    <i class="tio-arrow-backward"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+
+                    <div class="row">
+                        <div class="col-lg-8 mb-3 mb-lg-0">
+                            <!-- Card -->
+                            <div class="card mb-3 mb-lg-5">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Detalle de Orden <span class="badge badge-soft-dark rounded-circle ml-1"></span></h4>
+                                    <c:if test="#{meseroSession.ordenMesa.pago.equals('pendiente')}">
+                                        <a class="link btn text-primary " href="#{request.contextPath}/admin-ultimate/mesero/agregar-productos.xhtml">Agregar Producto</a>
+                                    </c:if>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <!-- Media -->
+                                    <c:forEach items="#{meseroSession.detallesOrden()}" var="detallesOrden">
+                                        <div class="media">
+                                            <div class="avatar avatar-xl mr-3">
+                                                <h:graphicImage class="img-fluid" value="/images/#{detallesOrden.productoIdproducto.imagenPrincipal}" alt="Image Description"/>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <div class="row">
+                                                    <div class="col-md-3 mb-3 mb-md-0">
+                                                        <a class="h5 d-block" >#{detallesOrden.productoIdproducto.nombreProducto}</a>
+
+                                                        <div class="font-size-sm text-body">
+                                                            <span>Tamaño:</span>
+                                                            <span class="font-weight-bold">#{detallesOrden.productoIdproducto.tamanio}</span>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col col-md-3 align-self-center">
+                                                        <h5>$#{detallesOrden.precioUnit}</h5>
+                                                    </div>
+
+                                                    <div class="col col-md-1 px-2 align-self-center">
+                                                        <h5>#{detallesOrden.cantidad}</h5>
+                                                    </div>
+
+                                                    <div class="col col-md-3 align-self-center text-right">
+                                                        <h5>$#{detallesOrden.precioUnit * detallesOrden.cantidad} </h5>
+                                                    </div>
+                                                    <c:if test="#{meseroSession.ordenMesa.pago.equals('pendiente')}">
+                                                        <c:if test="#{meseroSession.ordenMesa.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                                            <div style="display: flex; align-self: center ; justify-content: center ; margin-left: 15px" class="col col-md-1 align-items-center text-right ">
+                                                                <div class="row">
+                                                                    <h:commandLink action="#{ventasSession.seleccionarCarrito(detallesOrden.idcarrito)}" html5:data-toggle="tooltip" html5:data-placement="top" title="Editar Orden"><i class="tio-edit btn-sm btn-ghost-primary btn-icon"></i></h:commandLink>
+                                                                </div>
+                                                            </div>
+                                                        </c:if>
+
+                                                        <c:if test="#{meseroSession.ordenMesa.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                                            <div style="display: flex; align-self: center ; justify-content: center ; margin-left: 15px" class="col col-md-1 align-items-center text-right ">
+
+                                                                <div class="row">
+                                                                    <h:commandLink action="#{ventasSession.seleccionarCarrito(detallesOrden.idcarrito)}" html5:data-toggle="tooltip" html5:data-placement="top" title="Editar Orden"><i class="tio-edit btn-sm btn-ghost-primary btn-icon"></i></h:commandLink>
+                                                                </div>
+                                                            </div>
+                                                        </c:if>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                    <!-- End Media -->
+                                    <hr></hr>
+                                    <div class="row justify-content-md-end mb-3">
+                                        <div class="col-md-8 col-lg-7">
+                                            <dl class="row text-sm-right">
+                                                <dt class="col-sm-6">Total:</dt>
+                                                <dd class="col-sm-6">$#{meseroSession.ordenMesa.total}</dd>
+
+                                            </dl>
+                                            <!-- End Row -->
+                                        </div>
+                                    </div>
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <!-- Card -->
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Mesa</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <a class="media align-items-center" >
+                                        <div class="icon icon-soft-info icon-circle mr-3">
+                                            <i class="tio-dining-table-outlined"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary">#{meseroSession.selectorMesa.nombreMesa}</span>
+                                        </div>
+
+                                    </a>
+
+                                    <hr></hr>
+
+                                    <a class="media align-items-center" >
+                                        <div class="icon icon-soft-info icon-circle mr-3">
+                                            <i class="tio-shopping-basket-outlined"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary">${meseroSession.listarOrdenesMesa().size()} Órdenes</span>
+                                        </div>
+
+                                    </a>
+
+                                    <hr></hr>
+
+
+                                </div>
+                                <!-- End Body -->
+                            </div>
+
+                            <!-- End Card -->
+
+
+                        </div>
+                    </div>
+                    <!-- End Row -->
+                </div>
+                <!-- End Content -->
+
+                <!-- Footer -->
+                <div class="d-print-none">
+
+                    <div class="footer">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col">
+                                <p class="font-size-sm mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2020 Htmlstream.</span></p>
+                            </div>
+                            <div class="col-auto">
+                                <div class="d-flex justify-content-end">
+                                    <!-- List Dot -->
+                                    <ul class="list-inline list-separator">
+                                        <li class="list-inline-item">
+                                            <a class="list-separator-link" href="#">FAQ</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <a class="list-separator-link" href="#">License</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <!-- Keyboard Shortcuts Toggle -->
+                                            <div class="hs-unfold">
+                                                <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle" href="javascript:;"
+                                                   data-hs-unfold-options='{
+                                                   "target": "#keyboardShortcutsSidebar",
+                                                   "type": "css-animation",
+                                                   "animationIn": "fadeInRight",
+                                                   "animationOut": "fadeOutRight",
+                                                   "hasOverlay": true,
+                                                   "smartPositionOff": true
+                                                   }'>
+                                                    <i class="tio-command-key"></i>
+                                                </a>
+                                            </div>
+                                            <!-- End Keyboard Shortcuts Toggle -->
+                                        </li>
+                                    </ul>
+                                    <!-- End List Dot -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- End Footer -->
+
+                <!-- Modal -->
+                <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Confirmar Pago</h5>
+                                <button type="button" class="btn btn-xs btn-icon btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                                    <i class="tio-clear tio-lg"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparada')}">
+                                    <p>Al aceptar se realizará el pago y se completará la orden.</p>
+                                </c:if>
+
+                                <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                    <p>Al aceptar se realizará el pago y se completará la orden.</p>
+                                </c:if>
+
+                                <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                    <p>Al aceptar se realizará el pago y no se podrán realizar modificaciones en esta orden.</p>
+                                </c:if>
+
+                                <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                    <p>Al aceptar se realizará el pago y no se podrán realizar modificaciones en esta orden.</p>
+                                </c:if>
+
+
+                                <h4 class="text-dark" >Valor Total: </h4> <h4 class="text-success">$#{ventasSession.orden.total}</h4>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                <h:commandButton action="#{ventasSession.pagarOrden()}" class="btn btn-danger" value="Continuar"></h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </h:form>
+        </main>
+
+    </ui:composition>
+
+
+</html>
+

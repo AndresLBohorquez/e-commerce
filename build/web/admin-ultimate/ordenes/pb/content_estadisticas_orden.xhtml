@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+
+        <main id="content" role="main" class="main">
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col-sm mb-2 mb-sm-0">
+                            <h1 class="page-header-title">Estadísticas</h1>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- End Page Header -->
+
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="mx-auto" style="width: 200px">
+                                <h1>Ventas Mes</h1>
+                            </div>
+                            <div id="chartMes">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="mx-auto" style="width: 125px">
+                                <h1>Top 10</h1>
+                            </div>
+                            <div id="chartTop10">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="mx-auto" style="width: 125px">
+                                <h1>Ventas Día</h1>
+                            </div>
+                            <div id="chartDia">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mx-auto" style="width: 125px">
+                                <h1>Ventas Año</h1>
+                            </div>
+                            <div id="chartAnio">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+        <!--GRAFICA VENTAS MES-->
+        <script>
+            var options = {
+                series: [{
+                        name: 'Valor',
+                        data: [#{graficaSession.datosMesString}]
+                    }],
+
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        columnWidth: '50%',
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: 2
+                },
+
+                grid: {
+                    row: {
+                        colors: ['#fff', '#f2f2f2']
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        rotate: -45
+                    },
+                    categories: [#{graficaSession.categoriasMesString}],
+                    tickPlacement: 'on'
+                },
+                yaxis: {
+                    title: {
+                        text: 'Ventas',
+                    },
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'light',
+                        type: "horizontal",
+                        shadeIntensity: 0.25,
+                        gradientToColors: undefined,
+                        inverseColors: true,
+                        opacityFrom: 0.85,
+                        opacityTo: 0.85,
+                        stops: [50, 0, 100]
+                    },
+                }
+            };
+
+            var chartMes = new ApexCharts(document.querySelector("#chartMes"), options);
+            chartMes.render();
+        </script>
+        <!--GRAFICA VENTAS MES-->
+
+
+        <!--GRAFICA TOP 10-->
+        <script>
+            var options = {
+                series: [{
+                        name: 'Cantidad',
+                        data: [#{graficaSession.datosTopS}]
+                    }, ],
+                chart: {
+                    height: 350,
+                    type: 'area'
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    type: 'category',
+                    categories: [#{graficaSession.categoriasTopS}]
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd/MM/yy HH:mm'
+                    },
+                },
+            };
+
+            var chartTop10 = new ApexCharts(document.querySelector("#chartTop10"), options);
+            chartTop10.render();
+        </script>
+        <!--FIN GRAFICA TOP 10-->
+
+        <!--GRAFICA VENTAS DIA-->
+        <script>
+            var options = {
+                series: [{
+                        name: 'Cantidad',
+                        data: [#{graficaSession.datosDia}]
+                    }, ],
+                chart: {
+                    height: 350,
+                    type: 'area'
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    type: 'category',
+                    categories: [#{graficaSession.categoriasDia}]
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd/MM/yy HH:mm'
+                    },
+                },
+            };
+
+            var chartDia = new ApexCharts(document.querySelector("#chartDia"), options);
+            chartDia.render();
+        </script>
+        <!--FIN GRAFICA VENTAS DIA-->
+
+
+        <!--GRAFICA VENTAS AÑO-->
+        <script>
+            var options = {
+                series: [{
+                        name: 'Valor',
+                        data: [#{graficaSession.datosAnioS}]
+                    }],
+
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        columnWidth: '50%',
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: 2
+                },
+
+                grid: {
+                    row: {
+                        colors: ['#fff', '#f2f2f2']
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        rotate: -45
+                    },
+                    categories: [#{graficaSession.categoriasAnioS}],
+                    tickPlacement: 'on'
+                },
+                yaxis: {
+                    title: {
+                        text: 'Ventas',
+                    },
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'light',
+                        type: "horizontal",
+                        shadeIntensity: 0.25,
+                        gradientToColors: undefined,
+                        inverseColors: true,
+                        opacityFrom: 0.85,
+                        opacityTo: 0.85,
+                        stops: [50, 0, 100]
+                    },
+                }
+            };
+
+            var chartAnio = new ApexCharts(document.querySelector("#chartAnio"), options);
+            chartAnio.render();
+        </script>
+        <!--FIN GRAFICA VENTAS AÑO-->
+
+    </ui:composition>
+
+
+</html>
+

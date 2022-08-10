@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:composition>
+
+
+        <c:forEach items="#{userSession.listarDatosUsuarioLogueado()}" var="userData">
+
+            <!-- Page title-->
+            <!-- Page Content-->
+            <div class="container pt-4 pb-3 py-sm-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="#{request.contextPath}/index.xhtml"><i class="czi-home"></i>Inicio</a></li>
+                        <li class="breadcrumb-item text-nowrap"><a href="order.xhtml">Cart&nbsp;</a>
+                        </li>
+                        <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
+                    </ol>
+                </nav>
+                <div class="rounded-lg box-shadow-lg mt-4 mb-5">
+                    <ul class="nav nav-tabs nav-justified mb-sm-4">
+                        <li class="nav-item"><a class="nav-link font-size-lg font-weight-medium py-4" href="order.xhtml">1. Orden</a></li>
+                        <li class="nav-item"><a class="nav-link font-size-lg font-weight-medium py-4 active" href="checkout.xhtml">2. Checkout</a></li>
+                    </ul>
+                    <h:form class="needs-validation px-3 px-sm-4 px-xl-5 pt-sm-1 pb-4 pb-sm-5" html5:novalidate="true">
+                        <div class="row pb-4 pt-3">
+                            <div class="col-sm-6 mb-4">
+                                <label class="font-weight-medium" for="fd-name">Name<sup class="text-danger ml-1">*</sup></label>
+                                <h:inputText class="form-control" value="#{userData.nombre} #{userData.apellido}" readonly="true" required="true" id="fd-name"/>
+                                <div class="invalid-feedback">Por favor ingrese su nombre</div>
+                            </div>
+                            <div class="col-sm-6 mb-4">
+                                <label class="font-weight-medium" for="telefonoLabel">Número de Teléfono<sup class="text-danger ml-1">*</sup></label>
+
+                                <h:selectOneMenu class="form-control"  id="telefonoLabel" value="#{ventasSession.telefono}">
+                                    <f:selectItem itemLabel="#{ventasSession.imprimirTelPrincipal().numerotelefono}" itemValue="#{ventasSession.imprimirTelPrincipal().numerotelefono}"></f:selectItem>
+                                    <f:selectItems value="#{ventasSession.imprimirTelNormal()}" var="telefonosLista" itemLabel="#{telefonosLista.numerotelefono}" itemValue="#{telefonosLista.numerotelefono}"></f:selectItems>
+                                </h:selectOneMenu>
+
+                                <div class="invalid-feedback">Por favor ingrese su número de teléfono!</div>
+                            </div>
+
+                        </div>
+                        <h2 class="h5 pb-3">Dirección de envío</h2>
+                        <div class="row mb-4">
+                            <div class="col-sm-6 mb-4">
+                                <label class="font-weight-medium" for="direccionLabel">Dirección<sup class="text-danger ml-1">*</sup></label>
+                                <h:selectOneMenu class="form-control"  id="direccionLabel" value="#{ventasSession.direccion}">
+                                    <f:selectItem itemLabel="#{ventasSession.imprimirDirPrincipal().nombreDireccion}" itemValue="#{ventasSession.imprimirDirPrincipal().nombreDireccion}"></f:selectItem>
+                                    <f:selectItems value="#{ventasSession.imprimirDirNornal()}" var="direccionesLista" itemLabel="#{direccionesLista.nombreDireccion}" itemValue="#{direccionesLista.nombreDireccion}"></f:selectItems>
+
+                                </h:selectOneMenu>
+
+
+                                <div class="invalid-feedback">Por favor ingresa tu dirección</div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 mb-4 mb-sm-0">
+                                <h2 class="h5 pb-2">Envío</h2>
+                                <div class="custom-control custom-radio custom-control-inline mb-3">
+                                    <input class="custom-control-input" type="radio" name="payment" checked="true" id="cash"/>
+                                    <label class="custom-control-label" for="cash">Pago en efectivo</label>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <label class="text-nowrap mr-3 mb-0" for="fd-change">Necesito cambio de </label>
+                                    <div class="input-group" style="width: 8rem;">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="czi-dollar"></i></span></div>
+                                        <h:inputText value="#{ventasSession.paga_con}" class="form-control bg-0 pr-3" id="fd-change"/>
+                                    </div>
+                                </div>
+                                <h2 class="h5 mt-3 pt-4 pb-2"></h2>
+                                <!--              <div class="custom-control custom-radio custom-control-inline pb-4">
+                                                <input class="custom-control-input" type="radio" name="payment" id="online"/>
+                                                <label class="custom-control-label" for="online">Pay with:&nbsp;&nbsp;&nbsp;<img class="d-inline-block align-middle" src="#{request.contextPath}/img/cards.png" style="width: 187px;" alt="Cerdit Cards"/></label>
+                                              </div>-->
+                                <h:commandLink class="btn btn-success btn-block mt-3" action="#{ventasSession.crearOrden()}" value="Registrar Orden"></h:commandLink>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="d-fle flex-column h-100 rounded-lg bg-secondary px-3 px-sm-4 py-4">
+                                    <h2 class="h5 pb-3">Resumen</h2>
+                                    <div class="d-flex justify-content-between font-size-md border-bottom pb-3 mb-3"><span>Subtotal:</span><span class="text-heading">$ #{productSession.subtotal}</span></div>
+                                    <div class="d-flex justify-content-between font-size-md border-bottom pb-3 mb-3"><span>Envío</span><span class="text-heading">$#{ventasSession.valorEnvioObj.valorEnvio}</span></div>
+                                    <div class="d-flex justify-content-between font-size-md mb-2"><span>Total:</span><span class="text-heading font-weight-medium">$#{productSession.subtotal + ventasSession.valorEnvioObj.valorEnvio}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+
+        </c:forEach>
+
+
+
+    </ui:composition>
+
+</html>

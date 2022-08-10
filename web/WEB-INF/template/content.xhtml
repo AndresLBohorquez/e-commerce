@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+        <ui:composition>
+
+                <!-- Page title-->
+                <!-- Page Content-->
+                <!-- Hero section-->
+                <section class="bg-darker bg-size-cover bg-position-center py-5 py-lg-10" style="background-image: url(#{request.contextPath}/assets/front_end/img/intro/bbq1.jpg.png);">
+                    <div class="container mt-4 mt-lg-3 pt-5 pb-10">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 text-center">
+                                <h5 class="text-light font-weight-light">La mejor comida desde 2010.</h5>
+                                <div class="h1 text-light mb-3 pb-4">Entregamos tu pedido en Bogotá.<br/>
+                                </div><a class="btn btn-primary" href="#{request.contextPath}/usuarios/client/productos_nolog.xhtml" data-scroll="">¿Qué deseas comer?</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="container py-4 my-lg-3 py-sm-5" id="cuisine">
+                    <h2 class="text-center pt-4 pt-sm-3" style="font-family: font-family: 'Rubik', sans-serif">La mejor comida en la ciudad.</h2>
+                    <p class="text-muted text-center mb-5">Elige lo que quieres y te lo llevamos a la puerta de tu casa.</p>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 mb-grid-gutter"><a class="card border-0 box-shadow" href="#{request.contextPath}/pb/login.xhtml"><img class="card-img-top" src="#{request.contextPath}/assets/front_end/img/food-delivery/category/01.jpg" alt="Platos" />
+                                <div class="card-body py-4 text-center">
+                                    <h3 class="h5 mt-1">Platos</h3>
+                                </div>
+                            </a></div>
+                        <div class="col-md-4 col-sm-6 mb-grid-gutter"><a class="card border-0 box-shadow" href="#{request.contextPath}/pb/login.xhtml"><img class="card-img-top" src="#{request.contextPath}/assets/front_end/img/food-delivery/category/02.jpg" alt="Bebidas" />
+                                <div class="card-body py-4 text-center">
+                                    <h3 class="h5 mt-1">Bebidas</h3>
+                                </div>
+                            </a></div>
+                        <div class="col-md-4 col-sm-6 mb-grid-gutter"><a class="card border-0 box-shadow" href="#{request.contextPath}/pb/login.xhtml"><img class="card-img-top" src="#{request.contextPath}/assets/front_end/img/food-delivery/category/03.jpg" alt="Complementos" />
+                                <div class="card-body py-4 text-center">
+                                    <h3 class="h5 mt-1">Complementos</h3>
+                                </div>
+                            </a></div>
+                    </div>
+                </section>
+                <!-- Become Courier / Partner CTA-->
+                <section class="container pb-4 pt-lg-5 pb-sm-5">
+                    <div class="row pt-4 mt-2 mt-lg-3 mb-md-2">
+                        <div class="col-lg-6 mb-grid-gutter">
+                            <div class="media d-block d-sm-flex justify-content-between align-items-center bg-faded-info rounded-lg">
+                                <div class="media-body pt-5 py-sm-5 px-4 pl-md-5 pr-md-0 text-center text-sm-left">
+                                    <h2>Misión</h2>
+                                    <p class="text-muted pb-2" style="text-align: justify;">La Esquina Llanera es un restaurante que se dedica a brindar platos únicos y exquisitos, trabajando siempre con buenos principios y valores, con el propósito de que todos nuestros clientes obtengan una buena experiencia..</p>
+
+                                </div><img class="d-block mx-auto mx-sm-0" width="272" src="#{request.contextPath}/assets/front_end/img/food-delivery/courier.png" alt="Become a Courier" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-grid-gutter">
+                            <div class="media d-block d-sm-flex justify-content-between align-items-center bg-faded-warning rounded-lg">
+                                <div class="media-body pt-5 py-sm-5 px-4 pl-md-5 pr-md-0 text-center text-sm-left">
+                                    <h2>Visión</h2>
+                                    <p class="text-muted pb-2" style="text-align: justify;">Ser reconocidos en el 2023 por nuestros deliciosos platos, por que trabajamos día a día por innovar y crecer, de está manera queremos mejorar el servicio al cliente para ser la opción ideal.</p>
+                                </div><img class="d-block mx-auto mx-sm-0" width="269" src="#{request.contextPath}/assets/front_end/img/food-delivery/chef.png" alt="Become a Partner" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+        </ui:composition>
+
+</html>

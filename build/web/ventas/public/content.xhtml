@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:composition>
+
+
+        <!-- Page title-->
+        <!-- Page Content-->
+        <div class="container pt-4 pb-3 py-sm-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
+                    <li class="breadcrumb-item"><a class="text-nowrap" href="#{request.contextPath}/index.xhtml"><i class="czi-home"></i>Home</a></li>
+                    <li class="breadcrumb-item text-nowrap active" aria-current="page">Cart</li>
+                </ol>
+            </nav>
+            <div class="rounded-lg box-shadow-lg mt-4 mb-5">
+                <h:form>
+                    <ul class="nav nav-tabs nav-justified mb-4">
+                        <li class="nav-item"><a class="nav-link font-size-lg font-weight-medium py-4 active" href="#">1. Orden</a></li>
+                        <li class="nav-item"><h:commandLink action="#{productSession.actualizarProductosCarritoRedir()}" class="nav-link font-size-lg font-weight-medium py-4" >2. Checkout</h:commandLink></li>
+                    </ul>
+                
+                
+                    <div class="px-3 px-sm-4 px-xl-5 pt-1 pb-4 pb-sm-5">
+                        <div class="row">
+                            <!-- Items in cart-->
+                            <div class="col-lg-8 col-md-7 pt-sm-2">
+                                <!-- Item-->
+                                <c:forEach items="#{productSession.articulos}" var="listaProd">
+
+                                    <div class="d-sm-flex justify-content-between align-items-center mt-3 mb-4 pb-3 border-bottom">
+                                        <div class="media media-ie-fix d-block d-sm-flex align-items-center text-center text-sm-left"><a class="d-inline-block mx-auto mr-sm-4" href="#" style="width: 7.5rem;">
+                                                <h:graphicImage value="/images/#{listaProd.imagen}" alt="img-x"/></a>
+                                            <div class="media-body pt-2">
+                                                <h3 class="product-title font-size-base mb-2"><a href="#">#{listaProd.nombre}</a></h3>
+                                                <div class="font-size-sm"><span class="text-muted mr-2">Size:</span>#{listaProd.tamanio}</div>
+                                                <div class="font-size-lg text-accent pt-2">$#{listaProd.precio}</div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-2 pt-sm-0 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left" style="max-width: 9rem;">
+                                            <div class="form-group mb-0">
+                                                <label class="font-weight-medium" for="quantity1">Cantidad</label>
+                                                <p:growl id="growl" showDetail="true"/>
+                                                <!--Spinner Slider-->
+                                                <h:panelGrid  columns="" style="margin-bottom: 10px">
+                                                    <p:spinner style="color: white" id="spinner1" value="#{listaProd.cantidad}" min="1" max="#{listaProd.cantidadTotal}" stepFactor="1">
+                                                        <p:ajax process="@this" update="growl"/>
+                                                    </p:spinner>
+                                                </h:panelGrid>
+                                            </div>
+                                            <h:commandLink action="#{productSession.eliminarProductoCarrito(listaProd)}" class="btn btn-link px-0 text-danger" type="button"><i class="czi-close-circle mr-2"></i><span class="font-size-sm">Borrar</span></h:commandLink>
+                                        </div>
+                                    </div>
+
+                                </c:forEach>
+                            </div>
+                            <!-- Sidebar-->
+                            <div class="col-lg-4 col-md-5 pt-3 pt-sm-4">
+                                <div class="rounded-lg bg-secondary px-3 px-sm-4 py-4">
+                                    <div class="text-center mb-4 pb-3 border-bottom">
+                                        <h3 class="h5 mb-3 pb-1">Total</h3>
+                                        <h4 class="font-weight-normal">$#{productSession.subtotal}</h4>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="mb-3" for="order-comments"><span class="badge badge-info font-size-xs mr-2">Nota</span><span class="font-weight-medium">Comentarios Adicionales</span></label>
+                                        <textarea class="form-control" rows="4" id="order-comments"></textarea>
+                                    </div>
+
+                                    <h:commandLink action="#{productSession.actualizarProductosCarrito()}"> 
+                                        <button class="btn btn-outline-primary btn-block" type="submit">Actualizar Carrito</button>
+                                    </h:commandLink>
+
+                                    <h:commandLink action="#{productSession.actualizarProductosCarritoRedir()}" class="btn btn-success btn-shadow btn-block mt-4 mb-3" ><i class="czi-card font-size-lg mr-2"></i>Continuar al Checkout</h:commandLink>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+
+    </ui:composition>
+
+</html>

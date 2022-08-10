@@ -1,0 +1,321 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+
+        <main id="content" role="main" class="main">
+            <!-- Content -->
+
+            <div class="content container-fluid">
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-end">
+                        <div class="col-sm mb-2 mb-sm-0">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb breadcrumb-no-gutter">
+                                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">Pages</a></li>
+                                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">Account</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Settings</li>
+                                </ol>
+                            </nav>
+
+                            <h1 class="page-header-title">Settings</h1>
+                        </div>
+
+                        <div class="col-sm-auto">
+                            <h:form>
+                                <c:forEach items="#{userSession.listarDatosUsuario()}" var="listaUsu">
+                                    <h:commandLink action="#{userSession.seleccionPerfilUsuario(listaUsu.idusuario)}" class="btn btn-primary">
+                                        <i class="tio-user mr-1"></i> My profile
+                                    </h:commandLink>    
+                                </c:forEach>
+                            </h:form>
+
+
+                        </div>
+                    </div>
+                    <!-- End Row -->
+                </div>
+                <!-- End Page Header -->
+
+                <div class="row justify-content-lg-center">
+
+
+                    <div class="col-lg-9">
+                        <!-- Card -->
+                        <div class="card mb-3 mb-lg-5">
+                            <!-- Profile Cover -->
+                            <div class="profile-cover">
+                                <div class="profile-cover-img-wrapper">
+                                    <img id="profileCoverImg" class="profile-cover-img" src="#{request.contextPath}/assets/img/1920x400/img2.jpg" alt="Image Description"/>
+
+                                    <!-- Custom File Cover -->
+                                    <div class="profile-cover-content profile-cover-btn">
+                                        <div class="custom-file-btn">
+                                            <input type="file" class="js-file-attach custom-file-btn-input" id="profileCoverUplaoder"
+                                                   data-hs-file-attach-options='{
+                                                   "textTarget": "#profileCoverImg",
+                                                   "mode": "image",
+                                                   "targetAttr": "src",
+                                                   "allowTypes": [".png", ".jpeg", ".jpg"]
+                                                   }'/>
+                                            <h:form>
+                                                <h:commandLink action="#{userSession.borrarImgPerfilUsuario()}" class="custom-file-btn-label btn btn-sm btn-white" >
+                                                    <i class="tio-add-photo mr-sm-1"></i>
+                                                    <span class="d-none d-sm-inline-block">Borrar Imagen</span>
+                                                </h:commandLink>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                    <!-- End Custom File Cover -->
+                                </div>
+                            </div>
+                            <!-- End Profile Cover -->
+
+                            <!-- Avatar -->
+                            <label class="avatar avatar-xxl avatar-circle avatar-border-lg avatar-uploader profile-cover-avatar" for="avatarUploader">
+                                <c:forEach items="#{userSession.listarDatosPerfilUsuario()}" var="imgUsu">
+                                    <h:graphicImage style="width: 126px; height: 126px ; border-radius: 50%;" id="avatarImg" class="avatar-img" value="/imgprofile/#{imgUsu.fotoPerfil}" alt="Image Description"/>
+                                </c:forEach>
+                                <input type="file" class="js-file-attach avatar-uploader-input" id="avatarUploader"
+                                       data-hs-file-attach-options='{
+                                       "textTarget": "#avatarImg",
+                                       "mode": "image",
+                                       "targetAttr": "src",
+                                       "allowTypes": [".png", ".jpeg", ".jpg"]
+                                       }'/>
+
+                                <span class="avatar-uploader-trigger">
+                                    <i class="tio-edit avatar-uploader-icon shadow-soft"></i>
+                                </span>
+                            </label>
+                            <!-- End Avatar -->
+                        </div>
+                        <!-- End Card -->
+
+                        <!-- Card -->
+                        <div class="card mb-3 mb-lg-5">
+                            <div class="card-header">
+                                <h2 class="card-title h4">Basic information</h2>
+                            </div>
+
+                            <div class="container-fluid" style="margin-top: 10px">
+                                <!-- Primary alert -->
+                                <c:if test="#{administracionView.tipoMensaje.equals('ok_A')}">
+                                    <div class="alert alert-primary" role="alert">
+                                        Usuario Actualizado
+                                    </div>
+                                </c:if>
+                                <!-- Success alert -->
+                                <c:if test="#{administracionView.tipoMensaje.equals('no_A')}">
+                                    <div class="alert alert-warning" role="alert">
+                                        Usuario no actualizado
+                                    </div>
+                                </c:if>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="card-body">
+                                <!-- Form -->
+                                <c:forEach items="#{userSession.listarDatosUsuario()}" var="datosUsuario">
+                                    <h:form>
+                                        <!-- Form Group -->
+                                        <div class="row form-group">
+                                            <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Full name</label>
+
+                                            <div class="col-sm-9">
+                                                <div class="input-group input-group-sm-down-break">
+                                                    <h:inputText class="form-control"  id="firstNameLabel" html5:placeholder="#{datosUsuario.nombre}" value="#{administracionView.nombre}"/>
+                                                    <h:inputText class="form-control" id="lastNameLabel" html5:placeholder="#{datosUsuario.apellido}" value="#{administracionView.apellido}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Form Group -->
+
+                                        <!-- Form Group -->
+                                        <div class="row form-group">
+                                            <label for="emailLabel" class="col-sm-3 col-form-label input-label">Email</label>
+
+                                            <div class="col-sm-9">
+                                                <h:inputText class="form-control" id="emailLabel" html5:placeholder="#{datosUsuario.email}" value="#{administracionView.email}"/>
+                                            </div>
+                                        </div>
+                                        <!-- End Form Group -->
+
+                                        <!-- Form Group -->
+                                        <!--                                            <div class="row form-group">
+                                                                                        <label for="addressLine1Label" class="col-sm-3 col-form-label input-label">Address line 1</label>
+                                        
+                                                                                        <div class="col-sm-9">
+                                                                                            <h:inputText class="form-control" id="addressLine1Label" html5:placeholder="acá debería haber una dirección" value=""/>
+                                                                                        </div>
+                                                                                    </div>-->
+                                        <!-- End Form Group -->
+
+                                        <!-- Form Group -->
+                                        <!--                                            <div class="row form-group">
+                                                                                        <label for="barrioLabel" class="col-sm-3 col-form-label input-label">Barrio</label>
+                                        
+                                                                                        <div class="col-sm-9">
+                                                                                            <h:inputText class="form-control" id="barrioLabel" html5:placeholder="aca deberia haber un barrio" value=""/>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                     End Form Group 
+                                        
+                                                                                     Form Group 
+                                                                                    <div class="row form-group">
+                                                                                        <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Phone</label>
+                                        
+                                                                                        <div class="col-sm-9">
+                                                                                            <h:inputText class="js-masked-input form-control" id="phoneLabel" html5:placeholder="aca deberia haber un telefono" value="" />
+                                                                                        </div>
+                                                                                    </div>-->
+                                        <!-- End Form Group -->
+
+
+
+                                        <!-- Form Group -->
+                                        <div class="row form-group">
+                                            <label for="dniLabel" class="col-sm-3 col-form-label input-label">DNI <span class="input-label-secondary"></span></label>
+
+                                            <div class="col-sm-9">
+                                                <h:inputText class="js-masked-input form-control" id="dniLabel" html5:placeholder="#{datosUsuario.dni}" value="#{administracionView.dni}" />
+                                            </div>
+                                        </div>
+                                        <!-- End Form Group -->
+
+                                        <!-- Input Group -->
+                                        <div class="form-group">
+                                            <label for="inputGroupHoverLightGenderSelect" class="input-label">ROL</label>
+
+                                            <div class="input-group input-group-merge input-group-hover-light">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="tio-user-outlined"></i>
+                                                    </span>
+                                                </div>
+                                                <h:selectOneMenu class="custom-select" value="#{administracionView.rol_idrol}">
+                                                    <f:selectItems value="#{administracionView.listUserRol}" var="rol" itemLabel="${rol.nombreRol}" itemValue="#{rol.idrol}">
+                                                    </f:selectItems>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <!-- End Input Group -->
+                                        <!-- Input Group -->
+                                        <div class="form-group">
+                                            <label for="inputGroupUserState" class="input-label">User State</label>
+
+                                            <div class="input-group input-group-merge input-group-hover-light">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="tio-user-outlined"></i>
+                                                    </span>
+                                                </div>
+                                                <h:selectOneMenu class="custom-select" value="#{administracionView.estado_usuario_idestado_usuario}">
+                                                    <f:selectItems value="#{administracionView.userStateList}" var="UserState" itemLabel="${UserState.nombreEstado}" itemValue="#{UserState.idestadoUsuario}">
+                                                    </f:selectItems>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <!-- End Input Group -->
+
+
+
+                                        <!-- Form Group -->
+                                        <div class="form-group">
+                                            <label for="passwordLabel" class="input-label">Password</label>
+
+                                            <div class="input-group input-group-merge">
+                                                <h:inputSecret class="js-toggle-password form-control" id="passwordLabel" html5:placeholder="Enter password" value="#{administracionView.clave}"/>
+                                            </div>
+                                        </div>
+                                        <!-- End Form Group -->
+
+                                        <div class="d-flex justify-content-end">
+                                            <h:commandButton class="btn btn-primary" value="Actualizar Usuario" action="#{administracionView.actualizarUsuario(datosUsuario.idusuario)}"></h:commandButton>
+                                        </div>
+                                    </h:form>
+                                    <!-- End Form -->
+                                </c:forEach>
+
+                            </div>
+                            <!-- End Body -->
+                        </div>
+                        <!-- End Card -->
+
+
+
+                        <div id="stickyBlockEndPoint"></div>
+                    </div>
+                </div>
+
+                <!-- End Row -->
+            </div>
+            <!-- End Content -->
+
+
+
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col">
+                        <p class="font-size-sm mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2020 Htmlstream.</span></p>
+                    </div>
+                    <div class="col-auto">
+                        <div class="d-flex justify-content-end">
+                            <!-- List Dot -->
+                            <ul class="list-inline list-separator">
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">FAQ</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <a class="list-separator-link" href="#">License</a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <!-- Keyboard Shortcuts Toggle -->
+                                    <div class="hs-unfold">
+                                        <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle" href="javascript:;"
+                                           data-hs-unfold-options='{
+                                           "target": "#keyboardShortcutsSidebar",
+                                           "type": "css-animation",
+                                           "animationIn": "fadeInRight",
+                                           "animationOut": "fadeOutRight",
+                                           "hasOverlay": true,
+                                           "smartPositionOff": true
+                                           }'>
+                                            <i class="tio-command-key"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End Keyboard Shortcuts Toggle -->
+                                </li>
+                            </ul>
+                            <!-- End List Dot -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- End Footer -->
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+
+
+    </ui:composition>
+
+
+</html>
+

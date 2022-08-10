@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <c:forEach items="#{productSession.mostrarDatosProducto()}" var="productData">
+            <!-- Page title-->
+            <!-- Custom page title-->
+            <div class="page-title-overlap bg-dark pt-4">
+                <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+                    <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                                <li class="breadcrumb-item"><a class="text-nowrap" href="#{request.contextPath}/usuarios/index.xhtml"><i class="czi-home"></i>Home</a></li>
+                                <li class="breadcrumb-item text-nowrap"><a href="#{request.contextPath}/usuarios/client/platos.xhtml">Menu</a>
+                                </li>
+                                <li class="breadcrumb-item text-nowrap active" aria-current="page">#{productData.nombreProducto}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+                        <h1 class="h3 text-light mb-2">#{productData.nombreProducto}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content-->
+            <div class="container">
+                <div class="bg-light box-shadow-lg rounded-lg">
+                    <!-- Tabs-->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item"><a class="nav-link p-4 active" href="#general" data-toggle="tab" role="tab">General Info</a></li>
+                    </ul>
+                    <div class="px-4 pt-lg-3 pb-3 mb-5">
+                        <div class="tab-content px-lg-3">
+                            <!-- General info tab-->
+                            <div class="tab-pane fade show active" id="general" role="tabpanel">
+                                <div class="row">
+                                    <!-- Product gallery-->
+                                    <div class="col-lg-7 pr-lg-0">
+                                        <div class="cz-product-gallery">
+                                            <div class="cz-preview order-sm-2">
+                                                <div class="cz-preview-item active" id="first">
+                                                    <h:graphicImage class="cz-image-zoom" value="/images/#{productData.imagenPrincipal}" alt="Product-x"/>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Product details-->
+                                    <div class="col-lg-5 pt-4 pt-lg-0">
+                                        <div class="product-details ml-auto pb-3">
+                                            <h:form>
+                                                <div class="h3 font-weight-normal text-dark mb-3 mr-1">$#{productData.precioUnitario}</div>
+                                                <div class="font-size-sm mb-4"><span class="text-heading font-weight-medium mr-1">Tamaño</span><span class="text-muted" id="colorOption">#{productData.tamanio}</span></div>
+                                                <div class="d-flex align-items-center pt-2 pb-4">
+                                                    <div class="form-group mr-3 pt-2 pb-4" style="width: 7rem;">
+                                                        <label class="font-weight-medium" for="quantity1">Quantity</label>
+                                                        <p:growl id="growl" showDetail="true"/>
+                                                        <!--Spinner Slider-->
+                                                        <h:panelGrid  columns="" style="margin-bottom: 10px">
+                                                            <p:spinner style="color: white" id="spinner1" value="#{productSession.articuloSelect.cantidad}" min="1" max="#{productData.cantidad}" stepFactor="1">
+                                                                <p:ajax process="@this" update="growl"/>
+                                                            </p:spinner>
+                                                        </h:panelGrid>
+                                                    </div>
+                                                    <h:commandLink action="#{productSession.agregarProductos(productData.idproducto , productSession.articuloSelect.cantidad, productData.nombreProducto, productData.precioUnitario, productData.imagenPrincipal, productData.tamanio, productData.cantidad, productData)}" class="btn btn-primary btn-shadow btn-block" type="button"><i class="czi-cart font-size-lg mr-2"></i>Add to Cart</h:commandLink>
+                                                </div>
+
+                                                <!-- Product panels-->
+                                                <div style="display: none" class="accordion mb-4" id="productPanels">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="accordion-heading"><a href="#shippingOptions" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="shippingOptions"><i class="czi-delivery text-muted lead align-middle mt-n1 mr-2"></i>Shipping options<span class="accordion-indicator"></span></a></h3>
+                                                        </div>
+                                                        <div class="collapse show" id="shippingOptions" data-parent="#productPanels">
+                                                            <div class="card-body font-size-sm">
+                                                                <div class="d-flex justify-content-between border-bottom pb-2">
+                                                                    <div>
+                                                                        <div class="font-weight-semibold text-dark">Local courier shipping</div>
+                                                                        <div class="font-size-sm text-muted">2 - 4 days</div>
+                                                                    </div>
+                                                                    <div>$16.50</div>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between border-bottom py-2">
+                                                                    <div>
+                                                                        <div class="font-weight-semibold text-dark">UPS ground shipping</div>
+                                                                        <div class="font-size-sm text-muted">4 - 6 days</div>
+                                                                    </div>
+                                                                    <div>$19.00</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="accordion-heading"><a class="collapsed" href="#localStore" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="localStore"><i class="czi-location text-muted font-size-lg align-middle mt-n1 mr-2"></i>Find in local store<span class="accordion-indicator"></span></a></h3>
+                                                        </div>
+                                                        <div class="collapse" id="localStore" data-parent="#productPanels">
+                                                            <div class="card-body">
+                                                                <select class="custom-select">
+                                                                    <option value="">Select your country</option>
+                                                                    <option value="Argentina">Argentina</option>
+                                                                    <option value="Belgium">Belgium</option>
+                                                                    <option value="France">France</option>
+                                                                    <option value="Germany">Germany</option>
+                                                                    <option value="Spain">Spain</option>
+                                                                    <option value="UK">United Kingdom</option>
+                                                                    <option value="USA">USA</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Sharing-->
+                                                <h6 class="d-inline-block align-middle font-size-base my-2 mr-2">Share:</h6><a class="share-btn sb-twitter mr-2 my-2" href="#"><i class="czi-twitter"></i>Twitter</a><a class="share-btn sb-instagram mr-2 my-2" href="#"><i class="czi-instagram"></i>Instagram</a><a class="share-btn sb-facebook my-2" href="#"><i class="czi-facebook"></i>Facebook</a>
+                                            </h:form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+
+
+    </ui:composition>
+
+</html>

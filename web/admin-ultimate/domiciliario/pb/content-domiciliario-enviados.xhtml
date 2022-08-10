@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main">
+
+            <div class="content container-fluid">
+                <div class="page-header">
+
+                    <div class="row align-items-center mb-3">
+                        <div class="col-sm">
+                            <h1 class="page-header-title">Domiciliario <span class="badge badge-soft-dark ml-2">#{domicilioSession.listarDomiciliosEntregando().size()}</span></h1>
+                        </div>
+                    </div>
+
+                    <!-- Nav Scroller -->
+                    <div class="js-nav-scroller hs-nav-scroller-horizontal">
+                        <!-- Nav -->
+                        <ul class="nav nav-tabs page-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link " href="#{request.contextPath}/admin-ultimate/domiciliario/content-domiciliario.xhtml">Pedidos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="#{request.contextPath}/admin-ultimate/domiciliario/content-domiciliario-pendientes.xhtml">Pendientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#{request.contextPath}/admin-ultimate/domiciliario/content-domiciliario-enviados.xhtml">Enviados</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="#{request.contextPath}/admin-ultimate/domiciliario/content-domiciliario-entregados.xhtml">Entregados</a>
+                            </li>
+                        </ul>
+                        <!-- End Nav -->
+                    </div>
+                    <!-- End Nav Scroller -->
+                </div>
+                <!-- End Page Header -->
+
+
+                <!-- Title -->
+                <div class="js-sortable-disabled d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-cap mb-0">Domicilios</h6>
+
+                </div>
+                <!-- End Title -->
+                <div class="container">
+                    <div class="row ">
+
+                        <c:forEach items="#{domicilioSession.listarDomiciliosEntregando()}" var="listaDomicilios">
+
+                            <!-- Body -->
+                            <div class="col-sm-4">
+                                <div class="card-body shadow-lg p-3 mb-5 bg-body rounded">
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-xl avatar-soft-primary avatar-circle avatar-border-lg mb-3">
+                                        <span class="avatar-initials">#{listaDomicilios.ordenIdorden.usuarioIdusuario.nombre.substring(0, 1)}#{listaDomicilios.ordenIdorden.usuarioIdusuario.apellido.substring(0, 1)}</span>
+                                        <c:if test="#{listaDomicilios.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                            <span class="avatar-status avatar-sm-status avatar-status-danger"></span>
+                                        </c:if>
+                                        <c:if test="#{listaDomicilios.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                            <span class="avatar-status avatar-sm-status avatar-status-warning"></span>
+                                        </c:if>
+                                        <c:if test="#{listaDomicilios.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparada')}">
+                                            <span class="avatar-status avatar-sm-status avatar-status-primary"></span>
+                                        </c:if>
+                                        <c:if test="#{listaDomicilios.ordenIdorden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                            <span class="avatar-status avatar-sm-status avatar-status-dark"></span>
+                                        </c:if>
+
+
+                                    </div>
+                                    <!-- End Avatar -->
+
+                                    <h3 class="mb-1">
+                                        <a class="text-dark" href="#">#{listaDomicilios.direccionDomicilio}</a>
+                                    </h3>
+
+                                    <div class="mb-2">
+                                        <i class="tio-city mr-1"></i>
+                                        <span>#{listaDomicilios.barrioDomicilio}</span>
+                                        <i class="tio-call ml-3"></i>
+                                        <span>#{listaDomicilios.telefonoDomicilio}</span>
+                                    </div>
+
+                                    <div class="mb-3 text-success">
+                                        <i class="tio-dollar-outlined mr-1"></i>
+                                        <span>#{listaDomicilios.ordenIdorden.total}</span>
+
+                                    </div>
+
+                                    <!-- Badges -->
+                                    <ul class="list-inline list-inline-m-1 mb-0">
+                                        <h:form>
+                                            <li class="list-inline-item"><h:commandLink action="#{domicilioSession.verOrdenDomicilio(listaDomicilios.ordenIdorden.idorden)}" class="badge badge-soft-primary p-2" ><i class="tio-invisible"></i> Ver</h:commandLink></li>
+                                            <li class="list-inline-item"><h:commandLink action="#{domicilioSession.entregarDomicilio(listaDomicilios.iddomicilio)}" class="badge badge-soft-success p-2 " ><i class="tio-checkmark-circle-outlined"></i> Entregar</h:commandLink></li>
+                                        </h:form>
+                                    </ul>
+                                    <!-- End Badges -->
+                                </div>
+                            </div>
+                            <!-- End Body -->
+
+                        </c:forEach>
+                    </div>
+                </div>
+                <!-- Container For Input Field -->
+                <div id="createProjectGridContainerToDo"></div>
+                <!-- End Content -->
+
+
+                <!-- End Tab Content -->
+            </div>
+
+
+
+            <div id="exampleModalCenter" class="modal fade w-100" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Entregar Domicilio</h5>
+                            <button type="button" class="btn btn-xs btn-icon btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                                <i class="tio-clear tio-lg"></i>
+                            </button>
+                        </div>
+                        <h:form id="form1" class="needs-validation">
+                            <div class="modal-body">
+                                <div class="col-md-12 col-lg-12  p-3 mb-5 bg-white rounded align-items-center">
+
+                                    <div class="row g-3">
+                                        <div class="col-sm-8">
+                                            <label for="Numero" class="form-label">Número de Mesa</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <h:inputText html5:type="number" html5:max="99" class="form-control" html5:placeholder="0" value="#{meseroSession.numeroMesa}"></h:inputText>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                <h:commandButton action="#{meseroSession.crearMesa()}" class="btn btn-primary" value="Agregar"></h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </ui:composition>
+
+
+</html>
+

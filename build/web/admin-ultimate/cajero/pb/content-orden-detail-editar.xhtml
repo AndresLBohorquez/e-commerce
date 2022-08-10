@@ -1,0 +1,473 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <main id="content" role="main" class="main">
+            <h:form>
+                <!-- Content -->
+                <div class="content container-fluid">
+                    <!-- Page Header -->
+                    <div class="page-header d-print-none">
+                        <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb breadcrumb-no-gutter">
+                                        <li class="breadcrumb-item"><a class="breadcrumb-link" href="ecommerce-orders.html">Ordenes</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Editar Orden</li>
+                                    </ol>
+                                </nav>
+
+                                <div class="d-sm-flex align-items-sm-center">
+                                    <h1 class="page-header-title">#{ventasSession.selectorOrden.codigoOrden}</h1>
+
+                                    <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Completada')}">
+                                        <span class="badge badge-soft-success ml-sm-3">
+                                            <span class="legend-indicator bg-success"></span>Completada
+                                        </span>
+                                    </c:if>
+                                    <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                        <span class="badge badge-soft-danger ml-sm-3">
+                                            <span class="legend-indicator bg-danger"></span>Pendiente
+                                        </span>
+                                    </c:if>
+                                    <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                        <span class="badge badge-soft-primary ml-sm-3">
+                                            <span class="legend-indicator bg-primary"></span>Enviando
+                                        </span>
+                                    </c:if>
+                                    <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Entregada')}">
+                                        <span class="badge badge-soft-primary ml-sm-3">
+                                            <span class="legend-indicator bg-primary"></span>Entregada
+                                        </span>
+                                    </c:if>
+                                    <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                        <span class="badge badge-soft-warning ml-sm-3">
+                                            <span class="legend-indicator bg-warning"></span>Preparacion
+                                        </span>
+                                    </c:if>
+
+                                    <span class="ml-2 ml-sm-3">
+                                        <i class="tio-date-range"></i> #{ventasSession.selectorOrden.fecha}
+                                    </span>
+                                </div>
+
+                                <div class="mt-2">
+                                    <a class="text-body mr-3" href="javascript:;" onclick="window.print(); return false;">
+                                        <i class="tio-print mr-1"></i> Print order
+                                    </a>
+
+                                    <!-- Unfold -->
+                                    <div class="hs-unfold">
+                                        <a class="js-hs-unfold-invoker text-body" href="javascript:;"
+                                           data-hs-unfold-options='{
+                                           "target": "#moreOptionsDropdown",
+                                           "type": "css-animation"
+                                           }'>
+                                            More options <i class="tio-chevron-down"></i>
+                                        </a>
+
+                                        <div id="moreOptionsDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu mt-1">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="tio-copy dropdown-item-icon"></i> Duplicate
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="tio-clear dropdown-item-icon"></i> Cancel order
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="tio-archive dropdown-item-icon"></i> Archive
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="tio-visible dropdown-item-icon"></i> View order status page
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="tio-edit dropdown-item-icon"></i> Edit order
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End Unfold -->
+                                </div>
+                            </div>
+
+                            <div class="col-sm-auto">
+                                <a class="btn btn-icon btn-sm btn-ghost-secondary rounded-circle mr-1" href="#{request.contextPath}/admin-ultimate/cajero/orden-detail.xhtml" data-toggle="tooltip" data-placement="top" title="Atrás">
+                                    <i class="tio-arrow-backward"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+
+
+                    <div class="row">
+
+                        <div class="col-lg-8 mb-3 mb-lg-0">
+                            <!-- Card -->
+                            <div class="card mb-3 mb-lg-5">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Editar <span class="badge badge-soft-dark rounded-circle ml-1"></span></h4>
+
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <!-- Media -->
+
+                                    <div class="media">
+                                        <div class="avatar avatar-xl mr-3">
+                                            <h:graphicImage class="img-fluid" value="/images/#{ventasSession.selectorCarrito.productoIdproducto.imagenPrincipal}" alt="Image Description"/>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-md-3 mb-3 mb-md-0">
+                                                    <a class="h5 d-block" >#{ventasSession.selectorCarrito.productoIdproducto.nombreProducto}</a>
+
+                                                    <div class="font-size-sm text-body">
+                                                        <span>Tamaño:</span>
+                                                        <span class="font-weight-bold">#{ventasSession.selectorCarrito.productoIdproducto.tamanio}</span>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col col-md-3 align-self-center">
+                                                    <h5>$#{ventasSession.selectorCarrito.precioUnit}</h5>
+                                                </div>
+
+
+                                                <div class="col col-sm-3 align-self-center">
+                                                    <p:growl id="growl" showDetail="true"/>
+                                                    <h:panelGrid  columns="" >
+                                                        <p:spinner style="color: white" id="spinner1"  value="#{ventasSession.selectorCarrito.cantidad}" min="1" max="#{ventasSession.selectorCarrito.productoIdproducto.cantidad}" stepFactor="1">
+                                                            <p:ajax process="@this" update="growl"/>
+                                                        </p:spinner>
+                                                    </h:panelGrid>
+
+                                                </div>
+
+                                                <div class="col col-md-3 align-self-center text-right">
+                                                    <h5>$#{ventasSession.selectorCarrito.precioUnit * ventasSession.selectorCarrito.cantidad} </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- End Media -->
+
+                                    <hr></hr>
+                                    <div class="row justify-content-md-end mb-3">
+                                        <div class="col-md-8 col-lg-7">
+                                            <dl class="row text-sm-right">
+                                                <dt class="col-sm-6">Subtotal:</dt>
+                                                <dd class="col-sm-6">$#{ventasSession.selectorCarrito.ordenIdorden.subtotal}</dd>
+                                                <dt class="col-sm-6">Valor Envío:</dt>
+                                                <dd class="col-sm-6">$#{ventasSession.selectorCarrito.ordenIdorden.valorEnvio}</dd>
+                                                <dt class="col-sm-6">Total:</dt>
+                                                <dd class="col-sm-6">$#{ventasSession.selectorCarrito.ordenIdorden.total}</dd>
+
+                                            </dl>
+                                            <!-- End Row -->
+                                        </div>
+                                    </div>
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+
+                            <!-- Card -->
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">
+                                        Estado de la orden
+                                        <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Completada')}">
+                                            <span class="badge badge-soft-success ml-1">
+                                                <span class="legend-indicator bg-success"></span>Completada
+                                            </span>
+                                        </c:if>
+                                        <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                            <span class="badge badge-soft-danger ml-1">
+                                                <span class="legend-indicator bg-danger"></span>Pendiente
+                                            </span>
+                                        </c:if>
+                                        <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                            <span class="badge badge-soft-warning ml-1">
+                                                <span class="legend-indicator bg-warning"></span>Preparacion
+                                            </span>
+                                        </c:if> 
+                                        <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                            <span class="badge badge-soft-primary ml-1">
+                                                <span class="legend-indicator bg-primary"></span>Enviando
+                                            </span>
+                                        </c:if> 
+                                        <c:if test="#{ventasSession.selectorOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Entregada')}">
+                                            <span class="badge badge-soft-primary ml-1">
+                                                <span class="legend-indicator bg-primary"></span>Entregada
+                                            </span>
+                                        </c:if> 
+                                    </h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <c:forEach items="#{ventasSession.horaEstadoOrden()}" var="estadoOrden">
+                                        <!-- Step -->
+                                        <ul class="step step-icon-xs">
+                                            <!-- Step Item -->
+                                            <li class="step-item">
+                                                <div class="step-content-wrapper">
+                                                    <small class="step-divider">#{estadoOrden.fecha}</small>
+                                                </div>
+                                            </li>
+                                            <!-- End Step Item -->
+
+                                            <!-- Step Item -->
+
+                                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                                <li class="step-item">
+                                                    <div class="step-content-wrapper">
+                                                        <span class="step-icon step-icon-soft-dark step-icon-pseudo"></span>
+                                                        <div class="step-content">
+                                                            <h5 class="mb-1">
+                                                                <a class="text-dark" >Pendiente</a>
+                                                            </h5>
+                                                            <p class="font-size-sm mb-0">#{estadoOrden.hora}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </c:if>
+                                            <!-- End Step Item -->
+
+                                            <!-- Step Item -->
+                                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                                <li class="step-item">
+                                                    <div class="step-content-wrapper">
+                                                        <span class="step-icon step-icon-soft-dark step-icon-pseudo"></span>
+
+                                                        <div class="step-content">
+                                                            <h5 class="mb-1">
+                                                                <a class="text-dark" href="#">En Preparación</a>
+                                                            </h5>
+
+                                                            <p class="font-size-sm mb-0">#{estadoOrden.hora}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </c:if>
+                                            <!-- End Step Item -->
+
+                                            <!-- Step Item -->
+                                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                                <li class="step-item">
+                                                    <div class="step-content-wrapper">
+                                                        <span class="step-icon step-icon-soft-dark step-icon-pseudo"></span>
+
+                                                        <div class="step-content">
+                                                            <h5 class="mb-1">
+                                                                <a class="text-dark" href="#">Enviada</a>
+                                                            </h5>
+
+                                                            <p class="font-size-sm mb-0">#{estadoOrden.hora}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </c:if>
+                                            <!-- End Step Item -->
+
+                                            <!-- Step Item -->
+                                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Entregada')}">
+                                                <li class="step-item">
+                                                    <div class="step-content-wrapper">
+                                                        <span class="step-icon step-icon-soft-dark step-icon-pseudo"></span>
+
+                                                        <div class="step-content">
+                                                            <h5 class="mb-1">
+                                                                <a class="text-dark" href="#">Entregada</a>
+                                                            </h5>
+
+                                                            <p class="font-size-sm mb-0">#{estadoOrden.hora}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </c:if>
+                                            <!-- End Step Item -->
+
+                                            <!-- Step Item -->
+                                            <c:if test="#{estadoOrden.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Completada')}">
+                                                <li class="step-item">
+                                                    <div class="step-content-wrapper">
+                                                        <span class="step-icon step-icon-soft-dark step-icon-pseudo"></span>
+
+                                                        <div class="step-content">
+                                                            <h5 class="mb-1">
+                                                                <a class="text-dark" href="#">Completada</a>
+                                                            </h5>
+
+                                                            <p class="font-size-sm mb-0">#{estadoOrden.hora}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </c:if>
+                                            <!-- End Step Item -->
+
+                                        </ul>
+                                    </c:forEach>
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+                        </div>
+
+                        <div class="col-lg-4">
+                            <!-- Card -->
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Cliente</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <a class="media align-items-center" href="#{request.contextPath}/admin-ultimate/cajero/cajero-perfil.xhtml">
+                                        <div>
+                                            <p:avatar style="margin-right: 20px" styleClass="p-mr-2" size="large" shape="circle">
+                                                <h:graphicImage class="avatar-img" value="/imgprofile/#{ventasSession.selectorOrden.usuarioIdusuario.fotoPerfil}" alt="Image Description"/>
+                                            </p:avatar>
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary">#{ventasSession.selectorOrden.usuarioIdusuario.nombre} #{ventasSession.selectorOrden.usuarioIdusuario.apellido}</span>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <i class="tio-chevron-right text-body"></i>
+                                        </div>
+                                    </a>
+
+                                    <hr></hr>
+
+                                    <a class="media align-items-center" href="#{request.contextPath}/admin-ultimate/cajero/cajero-perfil.xhtml">
+                                        <div class="icon icon-soft-info icon-circle mr-3">
+                                            <i class="tio-shopping-basket-outlined"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary">${ventasSession.listaOrdenesUsuario.size()} Órdenes</span>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <i class="tio-chevron-right text-body"></i>
+                                        </div>
+                                    </a>
+
+                                    <hr></hr>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5>Información de Contacto</h5>
+                                        <a class="link" href="javascript:;">Edit</a>
+                                    </div>
+
+                                    <ul class="list-unstyled list-unstyled-py-2">
+                                        <li>
+                                            <i class="tio-online mr-2"></i>
+                                            #{ventasSession.selectorOrden.usuarioIdusuario.email}
+                                        </li>
+                                        <li>
+                                            <i class="tio-android-phone-vs mr-2"></i>
+                                            #{ventasSession.selectorOrden.telefono}
+                                        </li>
+                                    </ul>
+
+                                    <hr></hr>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5>Dirección de Envío</h5>
+                                        <a class="link" href="javascript:;">Edit</a>
+                                    </div>
+
+                                    <span class="d-block">
+                                        #{ventasSession.selectorOrden.direccion}<br></br>
+                                        #{ventasSession.selectorOrden.barrio}<br></br>
+                                    </span>
+                                </div>
+                                <!-- End Body -->
+                            </div>
+                            <!-- End Card -->
+
+                            <div>
+                                <!-- Card -->
+                                <div>
+                                    <!-- Header -->
+                                    <div class="card-body" style="justify-content: center ">
+                                        <h:commandLink action="#{ventasSession.editarCantidadProducto()}" class="w-100 card-header-title btn btn-outline-success" value="Actualizar"></h:commandLink>
+                                        <h:commandLink action="#{ventasSession.eliminarProductoOrden()}" style="margin-top: 10px" class="w-100 card-header-title btn btn-outline-danger" value="Eliminar"></h:commandLink>
+                                    </div>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Row -->
+                </div>
+                <!-- End Content -->
+
+                <!-- Footer -->
+                <div class="d-print-none">
+
+                    <div class="footer">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col">
+                                <p class="font-size-sm mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2020 Htmlstream.</span></p>
+                            </div>
+                            <div class="col-auto">
+                                <div class="d-flex justify-content-end">
+                                    <!-- List Dot -->
+                                    <ul class="list-inline list-separator">
+                                        <li class="list-inline-item">
+                                            <a class="list-separator-link" href="#">FAQ</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <a class="list-separator-link" href="#">License</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <!-- Keyboard Shortcuts Toggle -->
+                                            <div class="hs-unfold">
+                                                <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle" href="javascript:;"
+                                                   data-hs-unfold-options='{
+                                                   "target": "#keyboardShortcutsSidebar",
+                                                   "type": "css-animation",
+                                                   "animationIn": "fadeInRight",
+                                                   "animationOut": "fadeOutRight",
+                                                   "hasOverlay": true,
+                                                   "smartPositionOff": true
+                                                   }'>
+                                                    <i class="tio-command-key"></i>
+                                                </a>
+                                            </div>
+                                            <!-- End Keyboard Shortcuts Toggle -->
+                                        </li>
+                                    </ul>
+                                    <!-- End List Dot -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Footer -->
+            </h:form>
+        </main>
+
+    </ui:composition>
+
+
+</html>
+

@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+
+        <main id="content" role="main" class="main">
+
+            <!-- Content -->
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+
+                    <div class="row align-items-center mb-3">
+                        <div class="col-sm">
+                            <h1 class="page-header-title">Órdenes <span class="badge badge-soft-dark ml-2">#{ventasSession.ordenesPreparacion().size()}</span></h1>
+
+                            <div class="mt-2">
+                                <a class="text-body mr-3" href="javascript:;" data-toggle="modal" data-target="#exportOrdersModal">
+                                    <i class="tio-download-to mr-1"></i> Export
+                                </a>
+
+                                <!-- Unfold -->
+                                <div class="hs-unfold">
+                                    <a class="js-hs-unfold-invoker text-body" href="javascript:;"
+                                       data-hs-unfold-options='{
+                                       "target": "#moreOptionsDropdown",
+                                       "type": "css-animation"
+                                       }'>
+                                        More options <i class="tio-chevron-down"></i>
+                                    </a>
+
+                                    <div id="moreOptionsDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu mt-1">
+                                        <a class="dropdown-item" href="#">
+                                            <i class="tio-folder-add dropdown-item-icon"></i> New order
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="tio-folder dropdown-item-icon"></i> New order - Development
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="tio-folder dropdown-item-icon"></i> New order - Staging
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- End Unfold -->
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!-- End Row -->
+
+
+                    <!-- Nav Scroller -->
+                    <div class="js-nav-scroller hs-nav-scroller-horizontal">
+                        <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+                            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                                <i class="tio-chevron-left"></i>
+                            </a>
+                        </span>
+
+                        <span class="hs-nav-scroller-arrow-next" style="display: none;">
+                            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                                <i class="tio-chevron-right"></i>
+                            </a>
+                        </span>
+
+                        <!-- Nav -->
+                        <ul class="nav nav-tabs page-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#{request.contextPath}/admin-ultimate/cocina/pendientes.xhtml">Pendientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#{request.contextPath}/admin-ultimate/cocina/preparacion.xhtml">Preparacion</a>
+                            </li>
+
+                        </ul>
+                        <!-- End Nav -->
+                    </div>
+                    <!-- End Nav Scroller -->
+                </div>
+                <!-- End Page Header -->
+
+                <!-- Card -->
+                <div class="card">
+                    <!-- Header -->
+                    <div class="card-header">
+                        <div class="row justify-content-between align-items-center flex-grow-1">
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                <form>
+                                    <!-- Search -->
+                                    <div class="input-group input-group-merge input-group-flush">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="tio-search"></i>
+                                            </div>
+                                        </div>
+                                        <input id="datatableSearch" type="search" class="form-control" placeholder="Search orders" aria-label="Search orders"/>
+                                    </div>
+                                    <!-- End Search -->
+                                </form>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="d-sm-flex justify-content-sm-end align-items-sm-center">
+                                    <!-- Datatable Info -->
+                                    <div id="datatableCounterInfo" class="mr-2 mb-2 mb-sm-0" style="display: none;">
+                                        <div class="d-flex align-items-center">
+                                            <span class="font-size-sm mr-3">
+                                                <span id="datatableCounter">0</span>
+                                                Selected
+                                            </span>
+                                            <a class="btn btn-sm btn-outline-danger" href="javascript:;">
+                                                <i class="tio-delete-outlined"></i> Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End Datatable Info -->
+
+                                    <!-- Unfold -->
+                                    <div class="hs-unfold mr-2">
+                                        <a class="js-hs-unfold-invoker btn btn-sm btn-white dropdown-toggle" href="javascript:;"
+                                           data-hs-unfold-options='{
+                                           "target": "#usersExportDropdown",
+                                           "type": "css-animation"
+                                           }'>
+                                            <i class="tio-download-to mr-1"></i> Export
+                                        </a>
+
+                                        <div id="usersExportDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm-right">
+                                            <span class="dropdown-header">Options</span>
+                                            <a id="export-copy" class="dropdown-item" href="javascript:;">
+                                                <img class="avatar avatar-xss avatar-4by3 mr-2" src="#{request.contextPath}/assets/svg/illustrations/copy.svg" alt="Image Description"/>
+                                                Copy
+                                            </a>
+                                            <a id="export-print" class="dropdown-item" href="javascript:;">
+                                                <img class="avatar avatar-xss avatar-4by3 mr-2" src="#{request.contextPath}/assets/svg/illustrations/print.svg" alt="Image Description"/>
+                                                Print
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <span class="dropdown-header">Download options</span>
+                                            <a id="export-excel" class="dropdown-item" href="javascript:;">
+                                                <img class="avatar avatar-xss avatar-4by3 mr-2" src="#{request.contextPath}/assets/svg/brands/excel.svg" alt="Image Description"/>
+                                                Excel
+                                            </a>
+                                            <a id="export-csv" class="dropdown-item" href="javascript:;">
+                                                <img class="avatar avatar-xss avatar-4by3 mr-2" src="#{request.contextPath}/assets/svg/components/placeholder-csv-format.svg" alt="Image Description"/>
+                                                .CSV
+                                            </a>
+                                            <a id="export-pdf" class="dropdown-item" href="javascript:;">
+                                                <img class="avatar avatar-xss avatar-4by3 mr-2" src="#{request.contextPath}/assets/svg/brands/pdf.svg" alt="Image Description"/>
+                                                PDF
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End Unfold -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+                    </div>
+                    <!-- End Header -->
+
+                    <!-- Table -->
+                    <h:form>
+                        <div class="table-responsive datatable-custom">
+                            <table id="datatable" class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table" style="width: 95%"
+                                   data-hs-datatables-options='{
+                                   "columnDefs": [{
+                                   "targets": [0],
+                                   "orderable": false
+                                   }],
+                                   "order": [],
+                                   "info": {
+                                   "totalQty": "#datatableWithPaginationInfoTotalQty"
+                                   },
+                                   "search": "#datatableSearch",
+                                   "entries": "#datatableEntries",
+                                   "pageLength": 20,
+                                   "isResponsive": false,
+                                   "isShowPaging": false,
+                                   "pagination": "datatablePagination"
+                                   }'>
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Orden</th>
+                                        <th>Fecha</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                        <th>Total</th>
+                                        <th>Acciones</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <c:forEach items="#{ventasSession.ordenesPreparacion()}" var="listaOrdenes">
+
+                                        <tr>
+                                            <td class="table-column-pl-0 ">
+                                                <h:commandLink style="margin-left: 10px" action="#{ventasSession.seleccionarOrden(listaOrdenes.idorden , listaOrdenes.usuarioIdusuario.idusuario)}">#{listaOrdenes.codigoOrden}</h:commandLink>
+                                            </td>
+                                            <td>#{listaOrdenes.fecha}</td>
+                                            <td >
+                                                <a class="text-body" href="./ecommerce-customer-details.html">#{listaOrdenes.usuarioIdusuario.nombre} #{listaOrdenes.usuarioIdusuario.apellido}</a>
+                                            </td>
+                                            <td>
+                                                <c:if test="#{listaOrdenes.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Pendiente')}">
+                                                    <span class="badge badge-soft-warning">
+                                                        <span class="legend-indicator bg-warning"></span>Pendiente
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{listaOrdenes.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Completada')}">
+                                                    <span class="badge badge-soft-success">
+                                                        <span class="legend-indicator bg-success"></span>Completada
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{listaOrdenes.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Enviada')}">
+                                                    <span class="badge badge-soft-dark">
+                                                        <span class="legend-indicator bg-success"></span>Enviando
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="#{listaOrdenes.estadoOrdenIdestadoOrden.nombreEstadoOrden.equals('Preparacion')}">
+                                                    <span class="badge badge-soft-warning">
+                                                        <span class="legend-indicator bg-warning"></span>Preparacion
+                                                    </span>
+                                                </c:if>
+                                            </td>
+
+                                            <td>$#{listaOrdenes.total}</td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <h:commandLink style="margin-left: 5px" type="button" action="#{ventasSession.seleccionarOrden(listaOrdenes.idorden , listaOrdenes.usuarioIdusuario.idusuario)}" class="btn btn-primary btn-icon">
+                                                    <i class="tio-visible"></i>
+                                                </h:commandLink>
+                                            </td>
+
+                                        </tr>
+
+                                    </c:forEach>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </h:form>
+                    <!-- End Table -->
+
+                    <!-- Footer -->
+                    <div class="card-footer">
+                        <!-- Pagination -->
+                        <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                                <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                                    <span class="mr-2">Mostrando:</span>
+
+                                    <!-- Select -->
+                                    <select id="datatableEntries" class="js-select2-custom"
+                                            data-hs-select2-options='{
+                                            "minimumResultsForSearch": "Infinity",
+                                            "customClass": "custom-select custom-select-sm custom-select-borderless",
+                                            "dropdownAutoWidth": true,
+                                            "width": true
+                                            }'>
+                                        <option value="20" selected="true">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                    <!-- End Select -->
+
+                                    <span class="text-secondary mr-2">de</span>
+
+                                    <!-- Pagination Quantity -->
+                                    <span id="datatableWithPaginationInfoTotalQty"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-auto">
+                                <div class="d-flex justify-content-center justify-content-sm-end">
+                                    <!-- Pagination -->
+                                    <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Pagination -->
+                    </div>
+                    <!-- End Footer -->
+                </div>
+                <!-- End Card -->
+            </div>
+            <!-- End Content -->
+
+
+
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+
+
+    </ui:composition>
+
+
+</html>
+
